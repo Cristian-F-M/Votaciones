@@ -1,0 +1,226 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding-top: 60px;
+    min-height: 100vh;
+}
+
+main {
+    header {
+        top: 0;
+    }
+
+    .separador {
+        display: block;
+        background-color: #222;
+
+        &.horizontal {
+            height: 1px;
+            margin: 12px 0;
+        }
+    }
+
+    .c_title {
+        h1 {
+            font-size: 35px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+    }
+
+    form {
+        .c_candidatos {
+            display: grid;
+            // grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 280px));
+            grid-auto-rows: minmax(380px, 1fr);
+            gap: 30px;
+            padding: 0 25px;
+            margin: 25px 0;
+            justify-content: center;
+
+            @media screen and (max-width: 800px) and (min-width: 600px) {
+                grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            }
+
+            .card-candidato {
+                // background-color: #eee;
+                padding: 5px;
+                box-shadow: 0 5px 10px 0 #0009;
+                border-radius: 0.2rem;
+
+                .c_nombre-candidato {
+                    // background-color: red;
+                    width: 100%;
+                    height: 10%;
+                    display: flex;
+                    align-items: center;
+
+                    h3 {
+                        width: 100%;
+                        text-align: center;
+                        margin: 0;
+                        font-size: 22px;
+                        border-bottom: 1px solid #666;
+                        padding-bottom: 2px;
+                    }
+                }
+
+                .c_foto-candidato {
+                    width: 100%;
+                    height: calc(80% - 5px);
+
+                    img {
+                        width: 100%;
+                        height: 100%;
+                    }
+                }
+
+                .seleccionar-candidato {
+                    width: 100%;
+                    height: 10%;
+                    margin-top: 5px;
+
+                    .c_input-checkbox {
+                        position: relative;
+                        width: 100%;
+                        height: 100%;
+
+                        input {
+                            position: absolute;
+                            inset: 0;
+                            opacity: 0;
+                        }
+
+                        label {
+                            position: absolute;
+                            inset: 0;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            font-size: 22px;
+                            cursor: pointer;
+                            background-color: #6a4;
+                            border-bottom-left-radius: 0.3rem;
+                            border-bottom-right-radius: 0.3rem;
+                            transition: background-color 0.5s;
+
+                            &[seleccionado="true"] {
+                                background-color: #5d3;
+
+                                &::after {
+                                    content: "seleccionado";
+                                }
+                            }
+
+                            &[seleccionado="false"]::after {
+                                content: "seleccionar";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .c_paginacion {
+            background-color: #f003;
+            height: 43px;
+        }
+
+        .c_button {
+            height: 45px;
+            display: flex;
+            justify-content: start;
+            margin-top: 50px;
+            margin-left: 25px;
+
+            @media screen and (max-width: 768px) {
+                height: 50px;
+                margin-right: 0;
+                justify-content: center;
+                margin-bottom: 20px;
+            }
+
+            button {
+                height: 100%;
+                width: 200px;
+                font-size: 20px;
+                background-color: #55dd33;
+                border: 0;
+                border-radius: 0.2rem;
+                cursor: pointer;
+                border: 1px solid #0a0;
+
+                &:hover {
+                    background-color: #3daf20;
+                }
+
+                @media screen and (max-width: 768px) {
+                    width: 97%;
+                }
+            }
+        }
+
+        .c_mensaje {
+            border-style: solid;
+            border-width: 2px 0;
+            height: 50px;
+            margin-top: 50px;
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+
+            @media screen and (max-width: 768px) {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+
+            &.error {
+                background-color: #e1595699;
+                border-color: #e65956;
+            }
+
+            &.advertencia{
+                background-color: #eed04999;
+                border-color: #eed049;
+            }
+
+            p {
+                margin: 0;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+
+    .c_noCandidatos {
+        width: 100%;
+        padding: 25px 0;
+        position: absolute;
+        top: 50%;
+        box-shadow: inset 0 0 10px #0005;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+
+        h2 {
+            margin: 20px 0;
+            text-align: center;
+            font-size: 35px;
+
+            @media screen and (max-width: 768px) {
+                font-size: 28px;
+            }
+        }
+
+        p {
+            width: 100%;
+            text-align: center;
+            margin: 5px;
+        }
+    }
+}

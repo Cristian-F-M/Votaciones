@@ -1,0 +1,158 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    // background-color: #bbb;
+    margin: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.c_mensajes {
+
+    z-index: 100;
+
+    @media screen AND (min-width: 992px) {
+        // background-color: #999;
+        position: fixed;
+        top: 15px;
+        right: 0;
+        height: fit-content;
+        width: fit-content;
+        max-width: 300px;
+        display: flex;
+        flex-direction: column;
+        justify-content: right;
+    }
+
+
+    @media screen AND (max-width: 991px) {
+        position: absolute;
+        height: 60px;
+        width: 100%;
+        top: 0;
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    .mensaje {
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        box-shadow: 0 0 3px 0 #0008;
+
+        &.text-error {
+            color: #f22;
+        }
+
+        @media screen AND (min-width: 992px) {
+            width: fit-content;
+            // background-color: red;
+            align-self: flex-end;
+            margin-bottom: 10px;
+            border-top-left-radius: 0.5rem;
+            padding: 0 10px;
+            position: relative;
+            font-size: 17px;
+            transform: translateX(100%);
+
+            &:nth-last-child(1) {
+                margin: 0;
+            }
+
+            &[animacion="out"] {
+                animation: mensajeOutDesktop 0.8s forwards ease;
+            }
+
+            &[animacion="in"] {
+                animation: mensajeInDesktop 0.8s forwards ease;
+            }
+        }
+
+        @media screen AND (max-width: 991px) {
+            justify-content: center;
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            transform: translateY(-100%);
+            padding: 0 10px;
+
+            &[animacion="in"] {
+                animation: mensajeInMovil 0.8s ease forwards;
+            }
+
+            &[animacion="out"] {
+                animation: mensajeOutMovil 0.8s ease forwards;
+            }
+        }
+
+        .c_carga {
+            width: 100%;
+            height: 2px;
+            background-color: #000;
+            position: absolute;
+            bottom: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+
+            &[animacion="true"] {
+                animation: carga 5s linear forwards;
+
+                @media screen AND (max-width: 991px) {
+                    animation-duration: 3s;
+                }
+            }
+        }
+    }
+}
+
+@keyframes carga {
+    to {
+        transform: scaleX(100%);
+    }
+}
+
+@keyframes mensajeInDesktop {
+    from {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes mensajeOutDesktop {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+@keyframes mensajeInMovil {
+    from {
+        transform: translateY(-100%);
+    }
+
+    to {
+        transform: translateY(0);
+    }
+}
+
+@keyframes mensajeOutMovil {
+    from {
+        transform: translateY(0);
+    }
+
+    to {
+        transform: translateY(-100%);
+    }
+}
