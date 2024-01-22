@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="icon"
+            href="{{ url_for('static', filename='images/favicon.ico') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/icons/bootstrap-icons.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/verificar-usuario.css') }}"
+        />
+        <script
+            src="{{ url_for('static', filename='js/verificar-usuario.js') }}"
+            defer
+        ></script>
+        <title>Votaciones - Restablecer Contraseña</title>
+    </head>
+
+    <body>
+        <main>
+            <div class="c_form">
+                <header>
+                    <div class="c_icon-email">
+                        <i class="bi-envelope-arrow-up-fill"></i>
+                    </div>
+                    <h1>Verifica tu usuario</h1>
+                </header>
+
+                <div class="c_informacion">
+                    <p>
+                        Te enviaremos un <b>código</b> al correo
+                        cf****@gmail.com, escribelo en el siguiente espacio.
+                    </p>
+                    <p>Si no te llega el correo revisa en <b>spam</b></p>
+                </div>
+
+                <form action="">
+                    <div class="c_input">
+                        <input
+                            id="CodigoUsuario"
+                            type="text"
+                            required
+                            placeholder=""
+                        />
+                        <label for="CodigoUsuario">Código</label>
+                    </div>
+                    <div class="c_button">
+                        <button
+                            id="VerificarButton"
+                            onclick="location='/restablecer-contraseña/'"
+                        >
+                            Verificar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </body>
+</html>

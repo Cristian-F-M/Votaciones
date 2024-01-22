@@ -1,0 +1,15 @@
+{% set session = get_flashed_messages(category_filter=['session'])[0] %}
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/alerta.css') }}"
+/>
+<script src="{{ url_for('static', filename='js/alerta.js') }}" defer></script>
+
+{% if session %}
+<div class="c_mensajes">
+    <div class="mensaje {{ 'text-error' if session[0] == 'error' else ''}}">
+        <p>{{ session[-1] }}</p>
+        <div class="c_carga"></div>
+    </div>
+</div>
+{% endif %}

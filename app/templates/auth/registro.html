@@ -1,0 +1,179 @@
+{% set usuarioOld = get_flashed_messages(category_filter=['usuarioOld'])[0] %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/icons/bootstrap-icons.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/registro.css') }}"
+        />
+        <script
+            src="{{ url_for('static', filename='js/registro.js') }}"
+            defer
+        ></script>
+        <title>Votaciones - Crear cuenta</title>
+    </head>
+
+    <body>
+        <main>
+            <div class="c_forms" id="Forms" estado="registro">
+                <div class="c_form registro">
+                    <header>
+                        <h1>Crear cuenta</h1>
+                    </header>
+                    <form
+                        action="{{ url_for('usuario.registrar') }}"
+                        method="post"
+                        autocomplete="off"
+                    >
+                        <div class="c_input">
+                            <input
+                                name="nombreUsuario"
+                                id="NombreUsuario"
+                                type="text"
+                                value="{{ usuarioOld.nombreUsuario if usuarioOld else '' }}"
+                                placeholder=""
+                                required
+                            />
+                            <label for="NombreUsuario">Nombre</label>
+                        </div>
+                        <div class="c_input">
+                            <input
+                                name="apellidoUsuario"
+                                id="ApellidoUsuario"
+                                type="text"
+                                value="{{ usuarioOld.apellidoUsuario if usuarioOld else '' }}"
+                                placeholder=""
+                                required
+                            />
+                            <label for="ApellidoUsuario">Apellido</label>
+                        </div>
+                        <div class="c_select">
+                            <select
+                                name="tipoDocumentoUsuario"
+                                id="TipoDocumentoUsuario"
+                            >
+                                {% for tipoDocumento in TiposDocumento %}
+                                <option value="{{ tipoDocumento.idTipoDocumento }}">{{ tipoDocumento.descripcionTipoDocumento }}</option>
+                                {% endfor %}
+                            </select>
+                            <label for="TipoDocumentoUsuario"
+                                >Tipo de documento</label
+                            >
+                        </div>
+                        <div class="c_input">
+                            <input
+                                name="documentoUsuario"
+                                id="DocumentoUsuario"
+                                type="number"
+                                value="{{ usuarioOld.documentoUsuario if usuarioOld else '' }}"
+                                placeholder=""
+                                required
+                            />
+                            <label for="DocumentoUsuario">Documento</label>
+                        </div>
+                        <div class="c_input">
+                            <input
+                                name="correoUsuario"
+                                id="CorreoUsuario"
+                                type="email"
+                                value="{{ usuarioOld.correoUsuario if usuarioOld else '' }}"
+                                placeholder=""
+                                required
+                            />
+                            <label for="CorreoUsuario">Correo</label>
+                        </div>
+                        <div class="c_input">
+                            <input
+                                name="telefonoUsuario"
+                                id="TelefonoUsuario"
+                                type="number"
+                                value="{{ usuarioOld.telefonoUsuario if usuarioOld else '' }}"
+                                placeholder=""
+                            />
+                            <label for="TelefonoUsuario">Telefono</label>
+                        </div>
+                        <div class="c_input">
+                            <input
+                                name="contraseniaUsuario"
+                                id="ContraseniaUsuario"
+                                type="password"
+                                placeholder=""
+                                required
+                            />
+                            <label for="ContraseniaUsuario">Contraseña</label>
+                        </div>
+                        <div class="c_input">
+                            <input
+                                name="contraseniaUsuario_confirm"
+                                id="ContraseniaUsuario_confirm"
+                                type="password"
+                                placeholder=""
+                                required
+                            />
+                            <label for="ContraseniaUsuario_confirm"
+                                >Confirmar contraseña</label
+                            >
+                        </div>
+                        <div class="c_button">
+                            <button type="submit" name="" id="buttonRegistrar">
+                                Crear Cuenta
+                            </button>
+                        </div>
+                    </form>
+                    <div class="c_acciones">
+                        <span>Ya tienes una cuenta,</span>
+                        <a href="{{ url_for('general.login') }}"
+                            >Iniciar sesión?</a
+                        >
+                    </div>
+                </div>
+                <div class="c_form correo">
+                    <header>
+                        <div id="backRegistro" class="back">
+                            <i class="bi bi-arrow-left"></i>
+                        </div>
+                        <div class="c_icon-email">
+                            <i class="bi-envelope-arrow-up-fill"></i>
+                        </div>
+                        <h1>Verifica tu correo</h1>
+                    </header>
+
+                    <div class="c_informacion">
+                        <p>
+                            Te enviaremos un <b>código</b> al correo
+                            <span id="Correo">ex***@gmail.com</span>, escribelo
+                            en el siguiente espacio.
+                        </p>
+                        <p>Si no te llega el correo revisa en <b>spam</b></p>
+                    </div>
+
+                    <form action="">
+                        <div class="c_input">
+                            <input
+                                name="codigoUsuario"
+                                id="CodigoUsuario"
+                                type="text"
+                                required
+                                placeholder=""
+                            />
+                            <label for="CodigoUsuario">Código</label>
+                        </div>
+                        <div class="c_button">
+                            <button id="VerificarButton">Verificar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% include 'componentes/alerta.html' %} 
+        </main>
+    </body>
+</html>

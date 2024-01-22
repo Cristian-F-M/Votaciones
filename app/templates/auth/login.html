@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/login.css') }}"
+        />
+        <script
+            src="{{ url_for('static', filename='js/login.js') }}"
+            defer
+        ></script>
+        <title>Votaciones - Crear cuenta</title>
+    </head>
+
+    <body>
+        <main>
+            <div class="c_form">
+                <header>
+                    <h1>Iniciar sesión</h1>
+                </header>
+                <form
+                    action="{{ url_for('usuario.iniciar_sesion') }}"
+                    method="POST"
+                    autocomplete="off"
+                >
+                    <div class="c_select">
+                        <select
+                            name="tipoDocumentoUsuario"
+                            id="TipoDocumentoUsuario"
+                        >
+                            {% for tipoDocumento in TiposDocumento%}
+                            <option value="{{ tipoDocumento.idTipoDocumento }}">
+                                {{ tipoDocumento.descripcionTipoDocumento }}
+                            </option>
+                            {% endfor%}
+                        </select>
+                        <label for="TipoDocumentoUsuario"
+                            >Tipo de documento</label
+                        >
+                    </div>
+                    <div class="c_input">
+                        <input
+                            name="documentoUsuario"
+                            id="DocumentoUsuario"
+                            type="number"
+                            placeholder=""
+                            required
+                        />
+                        <label for="DocumentoUsuario">Documento</label>
+                    </div>
+                    <div class="c_input">
+                        <input
+                            name="contraseniaUsuario"
+                            id="ContraseniaUsuario"
+                            type="password"
+                            placeholder=""
+                            required
+                        />
+                        <label for="ContraseniaUsuario">Contraseña</label>
+                    </div>
+                    <div class="c_button">
+                        <button
+                            type="submit"
+                            name=""
+                            id="buttonRegistrar"
+                            onclick="location"
+                            ='{{ url_for("usuario.iniciar_sesion") }}'
+                        >
+                            Iniciar
+                        </button>
+                    </div>
+                </form>
+                <div class="c_acciones">
+                    <p>
+                        <span>No tienes una cuenta,</span>
+                        <a href="{{ url_for('general.register') }}"
+                            >Registrarse?</a
+                        >
+                    </p>
+
+                    <p>
+                        <a href="{{ url_for('usuario.verificar_usuario') }}"
+                            >Olvidaste tu contraseña?</a
+                        >
+                    </p>
+                </div>
+            </div>
+        </main>
+        {% include 'componentes/alerta.html' %}
+    </body>
+</html>

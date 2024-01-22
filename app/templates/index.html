@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/icons/bootstrap-icons.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/index.css') }}"
+        />
+        <script
+            src="{{ url_for('static', filename='js/index.js') }}"
+            defer
+        ></script>
+        <title>Votaciones</title>
+    </head>
+
+    <body>
+        <main>
+            <div id="Inicio" class="c_fondo">
+                {% include 'componentes/header.html' %}
+
+                <div class="c_titulo">
+                    <h1>Elecciones representante <span id="anio"></span></h1>
+                    <h3>Centro de gestion Agroempresarial del oriente</h3>
+                </div>
+            </div>
+            <div class="descripcion">
+                <p>
+                    "Las elecciones son un proceso fundamental que permite a la
+                    comunidad universitaria elegir representantes y tomar
+                    decisiones importantes. A través de tu participación activa
+                    en este proceso, contribuyes directamente a dar forma al
+                    futuro de nuestra institución. Tu voto es una voz poderosa
+                    que influye en la dirección y las políticas de la
+                    universidad. Participar en las elecciones es una oportunidad
+                    única para expresar tus opiniones y valores, y para ser
+                    parte integral de la toma de decisiones democrática en
+                    nuestra comunidad académica. ¡Tu participación cuenta y hace
+                    la diferencia en la construcción de un campus más inclusivo,
+                    vibrante y comprometido!"
+                </p>
+            </div>
+            <div class="c_funciones">
+                <div class="separador-title">
+                    <h3>Funciones</h3>
+                </div>
+                <div class="c_imagen-funciones">
+                    <div class="c_imagen">
+                        <img
+                            src="{{ url_for('static', filename='images/8615847.webp') }}"
+                            alt=""
+                        />
+                    </div>
+                    <div class="funciones">
+                        <ol>
+                            <li>
+                                Promover la participación de los aprendices en
+                                las diferentes actividades
+                            </li>
+                            <li>
+                                Asumir compromisos como veedor y partícipe del
+                                proceso formativo
+                            </li>
+                            <li>
+                                Asistir, cada vez que sea citado, y participar
+                                activamente en los comités de seguimiento
+                                acompañamiento formativo o disciplinario de su
+                                ficha - grupo
+                            </li>
+                            <li>
+                                Participar con los demás voceros y el (los)
+                                representante (s) del centro, en la formulación
+                                y realización de actividades, servicios y
+                                proyectos
+                            </li>
+                            <li>
+                                Velar para que los aprendices compañeros de su
+                                ficha (grupo) vivan los compromisos del aprendiz
+                                definidos en este reglamento durante el proceso
+                                de formación, de acuerdo con su entorno.
+                            </li>
+                            <li>
+                                Velar para que el proceso formativo de la ficha
+                                (grupo), se desarrolle de forma armónica y de
+                                diálogo directo con los actores vinculados a la
+                                formación de su ficha.
+                            </li>
+                            <li>
+                                Ser parte activa y garante del proceso electoral
+                                de aprendices representantes.
+                            </li>
+                            <li>
+                                Cumplir con las responsabilidades como vocero de
+                                ficha (grupo) sin descuidar las obligaciones
+                                como aprendiz SENA.
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div id="Contacto" class="c_contacto">
+                <div class="contacto sena-fisico">
+                    <div class="c_title">
+                        <h3>Contacto fisico</h3>
+                    </div>
+
+                    <div class="c_info">
+                        <p><b>Direcciónes</b></p>
+                        <ul>
+                            <li>Transversal 8 Nº 8A -50, Vélez Santander</li>
+                            <li>Vereda Pozo Negro - Barbosa Santander (097)</li>
+                        </ul>
+                        <p class="horario">
+                            <b>Horario de antención: </b> Lunes a viernes de
+                            08:00am a 11:00am y de 02:00pm a 04:00pm
+                        </p>
+                    </div>
+                </div>
+                <div class="separador vertical"></div>
+                <div class="separador horizontal"></div>
+                <div class="contacto sena-virtual">
+                    <div class="c_title">
+                        <h3>Contacto virtual</h3>
+                    </div>
+                    <div class="c_info">
+                        <p class="paginaWeb">
+                            <b>Pagina web: </b>
+                            <a
+                                href="https://oferta.senasofiaplus.edu.co/"
+                                target="_blank"
+                                >oferta.senasofiaplus.edu.co</a
+                            >
+                        </p>
+                        <p>
+                            <b>Correo electronico: </b>
+                            <a
+                                href="mailto:atencionalclientevel@sena.edu.co"
+                                target="_blank"
+                                >atencionalclientevel@sena.edu.co</a
+                            >
+                        </p>
+                        <p><b>Telefonos: </b></p>
+                        <ul>
+                            <li>7563502</li>
+                            <li>7563017</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <br><br><br><br><br><br><br><br><br><br>
+            <div id="Nosotros">Nosotros</div>
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+
+            <footer id="Footer">Footer</footer>
+        </main>
+
+        {% include 'componentes/scroll.html' %} {% include
+        'componentes/alerta.html' %}
+    </body>
+</html>

@@ -1,0 +1,47 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}">
+<script src="{{ url_for('static', filename='js/header.js') }}" defer></script>
+
+<header id="header">
+    <div class="c_logo">
+        <a href="{{ url_for('general.inicio') }}">
+            <img
+                src="{{ url_for('static', filename='images/logo-SENA.png') }}"
+                alt="Logo del SENA"
+            />
+        </a>
+    </div>
+
+    {% include 'componentes/links.html' %}
+    <div class="c_menu-lateral">
+        <div class="btn_menu-lateral">
+            <div id="btn_menu" class="c_btn-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+        <div id="menu-lateral" class="menu-lateral">
+            <div class="c_usuario">
+                <span>{{ session.get('rolUsuario').descripcionRol }}</span>
+                <h4>{{ session.get('usernameUsuario') }}</h4>
+            </div>
+            <span class="separador"></span>
+            <div class="c_menu-movil">
+                {% include 'componentes/links.html' %}
+            </div>
+            <span class="separador"></span>
+            <div class="c_acciones-usuario">
+                <ul>
+                    <li>
+                        <a href="{{ url_for('usuario.perfil') }}">Perfil</a>
+                        <!-- <span></span> -->
+                    </li>
+                    <li>
+                        <a href="{{ url_for('usuario.cerrarSesion') }}">Cerrar sesión</a>
+                        <!-- <span></span> -->
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>
