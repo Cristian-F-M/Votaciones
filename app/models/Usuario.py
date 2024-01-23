@@ -1,5 +1,6 @@
 from app import db, login_manager
 from flask_login import UserMixin
+from flask import session
 
 
 class Usuario(db.Model, UserMixin):
@@ -48,9 +49,9 @@ class Usuario(db.Model, UserMixin):
             "votoUsuario": self.votoUsuario,
             "codigo": self.codigo,
         }
-        
+
     def get_id(self):
-        return (self.idUsuario)
+        return self.idUsuario
 
 
 @login_manager.user_loader

@@ -87,7 +87,7 @@ def iniciar_sesion():
     rs = usuario.rolUsuario.idRol == 36 or usuario.rolUsuario.idRol == 35
 
     if rs:
-        return redirect(url_for('general.inicio_administrador'))
+        return redirect(url_for('administrador.inicio_administrador'))
     
     return redirect(url_for("general.inicio"))
 

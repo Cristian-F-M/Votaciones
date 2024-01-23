@@ -31,10 +31,5 @@ def inicio():
 @login_required
 def votar():
     candidatos = Usuario.query.filter_by(idRol=2).all()
-
     return render_template("votar.html", candidatos=candidatos)
 
-@bp.route("/Administrar")
-@login_required
-def inicio_administrador():
-    return render_template('administrador/index.html')

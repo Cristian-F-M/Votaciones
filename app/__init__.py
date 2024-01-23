@@ -20,8 +20,9 @@ def create_app():
     # Importar las rutas que tengamos 
     # Se hace un register_blueprint con cada ruta    
     
-    from app.routes import usuario_route, general_route
+    from app.routes import usuario_route, general_route, administrador_route
     
     app.register_blueprint(usuario_route.bp)
     app.register_blueprint(general_route.bp)
+    app.register_blueprint(administrador_route.bp)
     return app
