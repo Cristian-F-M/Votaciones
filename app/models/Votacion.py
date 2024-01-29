@@ -10,7 +10,7 @@ class Votacion(db.Model):
     ganadorVotacion = db.Column(db.Integer, db.ForeignKey('usuarios.idUsuario'), nullable=False)
     ganador = db.relationship('Usuario')
     cantVotosVotacion = db.Column(db.Integer, nullable=True)
-    porcentajeVotosVotacion = db.Column(db.string(10), nullable=True)
+    porcentajeVotosVotacion = db.Column(db.String(10), nullable=True)
     totalVotosVotacion = db.Column(db.Integer, nullable=True)
     estadoVotacion = db.Column(db.Integer, db.ForeignKey('estados.idEstado'))
     estadoVotacionF = db.relationship('Estado', backref='votaciones')
