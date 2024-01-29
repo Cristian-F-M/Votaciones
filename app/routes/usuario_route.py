@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
-from flask_login import login_required, LoginManager, logout_user, login_user
+from flask_login import login_required, logout_user, login_user, current_user
 from flask import Blueprint, render_template
 from sqlalchemy.exc import IntegrityError
 import bcrypt
@@ -68,27 +68,15 @@ def iniciar_sesion():
     login_user(usuario)
 
     usernameUsuario = getUsername(usuario)
-
-    session["idUsuario"] = usuario.idUsuario
-    session["apellidoUsuario"] = usuario.apellidoUsuario
-    session["usernameUsuario"] = usernameUsuario
-    session["tipoDocumentoUsuario"] = usuario.tipoDocumentoUsuario.to_dict()
-    session["documentoUsuario"] = usuario.documentoUsuario
-    session["correoUsuario"] = usuario.correoUsuario
-    session["telefonoUsuario"] = usuario.telefonoUsuario
-    session["nombreUsuario"] = usuario.nombreUsuario
-    session["rolUsuario"] = usuario.rolUsuario.to_dict()
-    session["descripcionUsuario"] = usuario.descripcionUsuario
-    session["fotoUsuario"] = usuario.fotoUsuario
-    session["votoUsuario"] = usuario.votoUsuario
+    session['usernameUsuario'] = usernameUsuario
 
     flash(["informacion", f"Bienvenido/a {usernameUsuario}"], "session")
 
-    rs = usuario.rolUsuario.idRol == 36 or usuario.rolUsuario.idRol == 35
+    rs = current_user.rolUsuario.idRol == 36 or current_user.rolUsuario.idRol == 35
 
     if rs:
-        return redirect(url_for('administrador.inicio_administrador'))
-    
+        return redirect(url_for("administrador.inicio_administrador"))
+
     return redirect(url_for("general.inicio"))
 
 
@@ -174,16 +162,17 @@ def registrar():
 
     return redirect(url_for("general.register"))
 
+
 @bp.route("/verificar", methods=["GET", "POST"])
 def verificarCorreo():
     correo = request.json["correo"]
     enviar_correo(correo)
     return ""
 
+
 @bp.route("/perfil", methods=["GET"])
 def perfil():
-    return render_template('usuario-perfil.html')
-
+    return render_template("usuario-perfil.html")
 
 
 def validarContraseña(contrasenia):

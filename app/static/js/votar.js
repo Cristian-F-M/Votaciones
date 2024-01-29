@@ -1,6 +1,10 @@
 const inputs = document.querySelectorAll("input");
 const BTNVotar = document.getElementById("BTNVotar");
 const main = document.querySelector("main");
+const cards = document.querySelectorAll('#card-candidato');
+const imgCandidatos = document.querySelectorAll('.c_foto-candidato');
+const nombreCandidato = document.querySelectorAll('.c_nombre-candidato>h3');
+scrollSize = 10
 
 BTNVotar && BTNVotar.addEventListener("click", (evt) => {
     rs = validarVoto();
@@ -65,4 +69,52 @@ function validarVoto() {
     }
 
     return rs;
+}
+
+
+
+imgCandidatos.forEach((img) => {
+
+    let card = img.parentNode;
+    let c_card = card.parentNode;
+    let c_info = c_card.querySelector('.c_informacion-candidato')
+    let info = c_info.querySelector('.informacion-candidato')
+    let cerrar = info.querySelector('.cerrar>i')
+    let bCerrar = info.querySelector('.c_button>button')
+    let body = document.body;
+
+    img.addEventListener('click', () => {
+        document.querySelector('main').style.overflow = 'hidden';
+        body.style.overflowY = 'hidden';
+        showInfo(c_info, info)
+    });
+
+    bCerrar.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        hideInfo(c_info, info)
+        body.style.overflowY = 'auto';
+    })
+    cerrar.addEventListener('click', (evt) => {
+        evt.preventDefault();
+        hideInfo(c_info, info)
+        body.style.overflowY = 'auto';
+    })
+
+
+});
+
+
+
+function showInfo(c_info, info) {
+    c_info.setAttribute('open', '')
+    setTimeout(() => {
+        info.setAttribute('open', '');
+    }, 20);
+}
+
+function hideInfo(c_info, info) {
+    info.removeAttribute('open');
+    setTimeout(() => {
+        c_info.removeAttribute('open')
+    }, 300);
 }

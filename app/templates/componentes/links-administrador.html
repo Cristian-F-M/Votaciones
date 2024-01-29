@@ -1,8 +1,11 @@
 <nav>
     <ul>
-        <li><a href="{{ url_for('general.inicio') }}">Inicio</a></li>
-        <li><a href="{{ url_for('general.inicio') }}" target="_blank">Ver como aprendiz</a></li>
-        <li><a href="">Votaciones</a></li>
+        <li>
+            <a href="{{ url_for('general.inicio') }}" target="_blank"
+                >Ver como aprendiz</a
+            >
+        </li>
+        <li><a href="{{ url_for('administrador.votaciones') }}">Votaciones</a></li>
         <li><a href="">Usuarios</a></li>
         <li><a href="">Faltas y Sanciones</a></li>
     </ul>

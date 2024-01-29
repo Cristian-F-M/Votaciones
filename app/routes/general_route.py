@@ -30,6 +30,6 @@ def inicio():
 @bp.route("/Votar")
 @login_required
 def votar():
-    candidatos = Usuario.query.filter_by(idRol=2).all()
+    candidatos = Usuario.query.filter_by(idRol=34).all()
     return render_template("votar.html", candidatos=candidatos)
 

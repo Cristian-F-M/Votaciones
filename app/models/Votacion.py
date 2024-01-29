@@ -9,18 +9,9 @@ class Votacion(db.Model):
     fechaFinVotacion = db.Column(db.Date, nullable=False)
     ganadorVotacion = db.Column(db.Integer, db.ForeignKey('usuarios.idUsuario'), nullable=False)
     ganador = db.relationship('Usuario')
-    cantVotosVotacion = db.Column(db.Integer, nullable=False)
-    estadoVotacion_id = db.Column(db.Integer, db.ForeignKey('estados.idEstado'))
-    estadoVotacion = db.relationship('Estado', backref='votaciones', foreign_keys=[estadoVotacion_id])
+    cantVotosVotacion = db.Column(db.Integer, nullable=True)
+    porcentajeVotosVotacion = db.Column(db.string(10), nullable=True)
+    totalVotosVotacion = db.Column(db.Integer, nullable=True)
+    estadoVotacion = db.Column(db.Integer, db.ForeignKey('estados.idEstado'))
+    estadoVotacionF = db.relationship('Estado', backref='votaciones')
 
-    
-    
-    def to_dict(self):
-        return {
-            'idVotacion': self.idVotacion,
-            'fechaInicioVotacion': self.fechaInicioVotacion,
-            'fechaFinVotacion': self.fechaFinVotacion,
-            'ganadorVotacion': self.ganadorVotacion,
-            'cantVotosVotacion': self.cantVotosVotacion,
-            'estadoVotacion': self.estadoVotacion,
-        }

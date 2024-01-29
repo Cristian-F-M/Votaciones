@@ -22,7 +22,7 @@
         </div>
         <div id="menu-lateral" class="menu-lateral">
             <div class="c_usuario">
-                <span>{{ session.get('rolUsuario').descripcionRol }}</span>
+                <span>{{ current_user.rolUsuario.descripcionRol }}</span>
                 <h4>{{ session.get('usernameUsuario') }}</h4>
             </div>
             <span class="separador"></span>

@@ -30,26 +30,6 @@ class Usuario(db.Model, UserMixin):
     contraseniaUsuario = db.Column(db.String(256))
     codigoUsuario = db.Column(db.String(10))
 
-    def to_dict(self):
-        return {
-            "idUsuario": self.idUsuario,
-            "nombreUsuario": self.nombreUsuario,
-            "apellidoUsuario": self.apellidoUsuario,
-            "idTipoDocumento": self.idTipoDocumento,
-            "tipoDocumentoUsuario": self.tipoDocumentoUsuario,
-            "documentoUsuario": self.documentoUsuario,
-            "correoUsuario": self.correoUsuario,
-            "telefonoUsuario": self.telefonoUsuario,
-            "idRol": self.idRol,
-            "rolUsuario": self.rolUsuario,
-            "descripcionUsuario": self.descripcionUsuario,
-            "fotoUsuario": self.fotoUsuario,
-            "estadoUsuario": self.estadoUsuario,
-            "idVoto": self.idVoto,
-            "votoUsuario": self.votoUsuario,
-            "codigo": self.codigo,
-        }
-
     def get_id(self):
         return self.idUsuario
 
@@ -57,5 +37,4 @@ class Usuario(db.Model, UserMixin):
 @login_manager.user_loader
 def load_user(usuario):
     usuarioS = Usuario.query.get(int(usuario))
-    print(usuarioS)
     return usuarioS

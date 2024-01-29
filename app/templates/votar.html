@@ -34,69 +34,106 @@
                 <div class="c_candidatos">
                     {% for candidato in candidatos %} {% if not
                     candidato.nombreUsuario == 'Voto en Blanco' %}
-                    <div class="card-candidato">
-                        <div class="c_nombre-candidato">
-                            <h3>{{ candidato.nombreUsuario }}</h3>
-                        </div>
-                        <div class="c_foto-candidato">
-                            <img
-                                src="{{ url_for('static', filename='images/' ~ candidato.fotoUsuario) }}"
-                                alt="Foto de {{ candidato.nombreUsuario }}"
-                            />
-                        </div>
-                        <div class="seleccionar-candidato">
-                            <div class="c_input-checkbox">
-                                <input
-                                    name="candidatoUsuario"
-                                    value="{{ candidato.idUsuario }}"
-                                    id="s_candidato-{{ candidato.idUsuario }}"
-                                    type="radio"
+                    <div id="card-candidato">
+                        <div class="card-candidato">
+                            <div class="c_nombre-candidato">
+                                <h3 title="Click para ver más información">
+                                    {{ candidato.nombreUsuario }}
+                                </h3>
+                            </div>
+                            <div
+                                title="Click para ver más información"
+                                class="c_foto-candidato"
+                            >
+                                <img
+                                    src="{{ url_for('static', filename='images/' ~ candidato.fotoUsuario) }}"
+                                    alt="Foto de {{ candidato.nombreUsuario}}"
                                 />
-                                <label
-                                    seleccionado="false"
-                                    for="s_candidato-{{ candidato.idUsuario }}"
-                                ></label>
+                            </div>
+                            <div class="seleccionar-candidato">
+                                <div class="c_input-checkbox">
+                                    <input
+                                        name="candidatoUsuario"
+                                        value="{{ candidato.idUsuario }}"
+                                        id="s_candidato-{{ candidato.idUsuario }}"
+                                        type="radio"
+                                    />
+                                    <label
+                                        seleccionado="false"
+                                        for="s_candidato-{{ candidato.idUsuario }}"
+                                    ></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="c_informacion-candidato">
+                            <div class="informacion-candidato">
+                                <a class="cerrar">
+                                    <i class="bi bi-x"></i>
+                                </a>
+                                <div class="c_nombre">
+                                    <h3>
+                                        {{ candidato.nombreUsuario }} {{
+                                        candidato.apellidoUsuario }}
+                                    </h3>
+                                </div>
+                                <div class="informacion">
+                                    <img
+                                        src="{{ url_for('static', filename='images/' ~ candidato.fotoUsuario) }}"
+                                        alt="Foto de {{ candidato.nombreUsuario }}"
+                                    />
+                                    <p>
+                                        {% if candidato.descripcionUsuario %} {{
+                                        candidato.descripcionUsuario }} {% else
+                                        %} Sin descripción {% endif %}
+                                    </p>
+                                </div>
+                                <div class="c_button">
+                                    <button>Cerrar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                     {% endif %} {% endfor %} {% for candidato in candidatos %}
                     {% if candidato.nombreUsuario == 'Voto en Blanco' %}
-                    <div class="card-candidato">
-                        <div class="c_nombre-candidato">
-                            <h3>{{ candidato.nombreUsuario }}</h3>
-                        </div>
-                        <div class="c_foto-candidato">
-                            <img
-                                src="{{ url_for('static', filename='images/' ~ candidato.fotoUsuario) }}"
-                                alt="Foto de {{ candidato.nombreUsuario }}"
-                            />
-                        </div>
-                        <div class="seleccionar-candidato">
-                            <div class="c_input-checkbox">
-                                <input
-                                    name="candidatoUsuario"
-                                    value="{{ candidato.idUsuario }}"
-                                    id="s_candidato-{{ candidato.idUsuario }}"
-                                    type="radio"
+                    <div id="card-candidato">
+                        <div class="card-candidato">
+                            <div class="c_nombre-candidato">
+                                <h3>{{ candidato.nombreUsuario }}</h3>
+                            </div>
+                            <div class="c_foto-candidato">
+                                <img
+                                    src="{{ url_for('static', filename='images/' ~ candidato.fotoUsuario) }}"
+                                    alt="Foto de {{ candidato.nombreUsuario }}"
                                 />
-                                <label
-                                    seleccionado="false"
-                                    for="s_candidato-{{ candidato.idUsuario }}"
-                                ></label>
+                            </div>
+                            <div class="seleccionar-candidato">
+                                <div class="c_input-checkbox">
+                                    <input
+                                        name="candidatoUsuario"
+                                        value="{{ candidato.idUsuario }}"
+                                        id="s_candidato-{{ candidato.idUsuario }}"
+                                        type="radio"
+                                    />
+                                    <label
+                                        seleccionado="false"
+                                        for="s_candidato-{{ candidato.idUsuario }}"
+                                    ></label>
+                                </div>
                             </div>
                         </div>
                     </div>
                     {% endif %} {% endfor %}
                 </div>
-                {% if session['rolUsuario'].idRol == 1 %}
+                {% if current_user.rolUsuario.idRol == 33 %}
                 <div class="c_button">
                     <button id="BTNVotar">Votar</button>
                 </div>
-                {% endif %} {% if session['rolUsuario'].idRol == 2 %}
+                {% endif %} {% if current_user.rolUsuario.idRol == 34 %}
                 <div class="c_mensaje error">
                     <p>Lo candidatos no pueden votar</p>
                 </div>
-                {% endif %} {% if session['rolUsuario'].idRol >= 3 %}
+                {% endif %} {% if current_user.rolUsuario.idRol >= 35 %}
                 <div class="c_mensaje error">
                     <p>Los administradores no pueden votar</p>
                 </div>
@@ -104,7 +141,7 @@
             </form>
             {% endif %} {% if candidatos|length <= 1 %}
             <div class="c_noCandidatos">
-                <h2>No hay Candidatos</h2>
+                <h2>No hay Candidatos {{ candidatos|length }}</h2>
                 <p>Aun no hay canditos para elegir</p>
                 <p>o no hay votaciones activas</p>
             </div>

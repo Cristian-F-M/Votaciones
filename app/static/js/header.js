@@ -33,8 +33,10 @@ links.forEach((link) => {
     });
 });
 
+var scrollSize = scrollSize 
+
 function colorHeader() {
-    if (window.scrollY > 250) {
+    if (window.scrollY > scrollSize) {
         header.style.backgroundColor =
             "#262"; /* Vuelve a azul si estás arriba de los 100 píxeles */
     } else {

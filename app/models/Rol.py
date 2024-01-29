@@ -6,8 +6,3 @@ class Rol(db.Model):
     idRol = db.Column(db.Integer, primary_key=True, autoincrement=True)
     descripcionRol = db.Column(db.String(45), nullable=False)
 
-    def to_dict(self):
-        return {
-            'idRol': self.idRol,
-            'descripcionRol': self.descripcionRol
-        }

@@ -17,6 +17,8 @@ def create_app():
     def unauthorized():
         return redirect(url_for('general.login'))
 
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
     # Importar las rutas que tengamos 
     # Se hace un register_blueprint con cada ruta    
     

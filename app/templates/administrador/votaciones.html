@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/votaciones.css') }}"
+        />
+        <link
+            rel="stylesheet"
+            href="{{ url_for('static', filename='css/icons/bootstrap-icons.css') }}"
+        />
+        <link
+            rel="icon"
+            href="{{ url_for('static', filename='images/favicon.ico') }}"
+        />
+        <script
+            src="{{ url_for('static', filename='js/votaciones.js') }}"
+            defer
+        ></script>
+        <title>Votación</title>
+    </head>
+
+    <body>
+        <main>
+            {% include 'componentes/header-administrador.html' %}
+            <div class="separador horizontal"></div>
+            <div class="c_titulo">
+                <h1>Gestion de votaciones</h1>
+            </div>
+            <div class="separador horizontal"></div>
+
+            <div class="c_candidato-votacion">
+                <div class="c_candidato">
+                    <div class="card-candidato">
+                        <div class="c_nombre-candidato">
+                            <h3>
+                                {{ rpActual.nombreUsuario if rpActual else 'No
+                                hay elegido' }}
+                            </h3>
+                        </div>
+                        <div class="c_foto-candidato">
+                            <img
+                                src="{{ url_for('static', filename='images/' ~ (rpActual.fotoUsuario if rpActual else 'Triste!.jpg')) }}"
+                                alt=""
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="c_votaciones">
+                    <div class="table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Inicio</th>
+                                    <th>Fin</th>
+                                    <th>Ganador</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for votacion in votaciones%}
+                                <tr>
+                                    <td>
+                                        <input
+                                            type="datetime-local"
+                                            value="{{ votacion.fechaInicioVotacion }}"
+                                            readonly
+                                        />
+                                    </td>
+                                    <td>
+                                        <input
+                                            type="datetime-local"
+                                            value="{{ votacion.fechaInicioVotacion }}"
+                                            readonly
+                                            />
+                                    </td>
+                                    <td>
+                                        {{ votacion.ganador.nombreUsuario if
+                                        votacion.ganador else 'N/A' }}
+                                    </td>
+                                    <td>
+                                        <div class="c_input-checkbox">
+                                            <input
+                                                type="checkbox"
+                                                name=""
+                                                id="ganador-{{ votacion.ganadorVotacion }}"
+                                            />
+                                            <label
+                                                estado="{{ votacion.estadoVotacionF.descripcionEstado }}"
+                                                for="ganador-{{ votacion.ganadorVotacion }}"
+                                            ></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button
+                                            id="Ver"
+                                            data-id="{{ votacion.ganadorVotacion }}"
+                                        >
+                                            Ver
+                                        </button>
+                                    </td>
+                                    <div
+                                        class="o_informacion-votacion"
+                                        data-id="{{ votacion.ganadorVotacion }}"
+                                    >
+                                        <div class="informacion-votacion">
+                                            <a href="" class="cerrar">
+                                                <i class="bi bi-x"></i>
+                                            </a>
+                                            <div class="c_titulo">
+                                                <h3>Votacion</h3>
+                                            </div>
+                                            <div class="c_votos-candidato">
+                                                <div class="c_fechas-votos">
+                                                    <div class="c_fechas">
+                                                        <div
+                                                            class="c_input-fijo"
+                                                            data-name="fechaInicio"
+                                                        >
+                                                            <input
+                                                                type="datetime-local"
+                                                                value="{{ votacion.fechaInicioVotacion }}"
+                                                            />
+                                                            <label for=""
+                                                                >Inicio</label
+                                                            >
+                                                        </div>
+                                                        <div
+                                                            class="c_input-fijo"
+                                                            data-name="fechaFin"
+                                                        >
+                                                            <input
+                                                                type="datetime-local"
+                                                                value="{{ votacion.fechaFinVotacion }}"
+                                                            />
+                                                            <label for=""
+                                                                >Final</label
+                                                            >
+                                                        </div>
+                                                    </div>
+                                                    <div class="c_votos">
+                                                        <div
+                                                            class="c_input-fijo"
+                                                            data-name="cantVotosCandidato"
+                                                        >
+                                                            <input
+                                                                name=""
+                                                                id=""
+                                                                type="text"
+                                                                value="{{ votacion.cantVotosVotacion if votacion.cantVotosVotacion else 'N/A' }}"
+                                                                placeholder=""
+                                                                readonly
+                                                            />
+                                                            <label for=""
+                                                                >Cantidad de
+                                                                votos</label
+                                                            >
+                                                        </div>
+                                                        <div
+                                                            class="c_input-fijo"
+                                                        >
+                                                            <input
+                                                                type="text"
+                                                                value="{{ votacion.porcentajeVotosVotacion if votacion.porcentajeVotosVotacion else 'N/A'}}"
+                                                                readonly
+                                                            />
+                                                            <label for=""
+                                                                >Porciento de
+                                                                votos</label
+                                                            >
+                                                        </div>
+                                                        <div
+                                                            class="c_input-fijo"
+                                                            data-name="totalVotos"
+                                                        >
+                                                            <input
+                                                                type="text"
+                                                                value="{{ votacion.totalVotosVotacion if votacion.totalVotosVotacion else 'N/A'}}"
+                                                                readonly
+                                                            />
+                                                            <label for=""
+                                                                >Total
+                                                                Votos</label
+                                                            >
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="c_candidato">
+                                                    <div class="card-candidato">
+                                                        <div
+                                                            class="c_nombre-candidato"
+                                                        >
+                                                            <h3>
+                                                                {{
+                                                                rpActual.nombreUsuario
+                                                                if rpActual else
+                                                                'No hay elegido'
+                                                                }}
+                                                            </h3>
+                                                        </div>
+                                                        <div
+                                                            class="c_foto-candidato"
+                                                        >
+                                                            <img
+                                                                src="{{ url_for('static', filename='images/' ~ (rpActual.fotoUsuario if rpActual else 'Triste!.jpg')) }}"
+                                                                alt=""
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </tr>
+                                {% endfor%}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
