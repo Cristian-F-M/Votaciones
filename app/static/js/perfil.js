@@ -29,6 +29,8 @@ inputCambiarContrasenia.addEventListener(
 );
 
 function handleCambiarContraseniaChange() {
+    showAcciones();
+
     if (inputCambiarContrasenia.checked) {
         setEditableAttribute([contraseniaOld, nuevaContrasenia], true);
     } else {
@@ -76,9 +78,6 @@ function setEditableAttribute(elements, value) {
 
 function setDisabledAttribute(elements, value) {
     elements.forEach((element) => {
-        console.log(element);
-        console.log(nuevaContrasenia.querySelector("input"));
-
         if (
             element !== nuevaContrasenia.querySelector("input") &&
             element !== contraseniaOld.querySelector("input")
@@ -89,7 +88,14 @@ function setDisabledAttribute(elements, value) {
 }
 
 function showAcciones() {
-    const editar = inputCambiarContrasenia.checked ? "true" : "false";
+    let editar = inputCambiarContrasenia.checked ? true : false;
+
+    console.log(`editar ${!editar}`);
+
+    
+    contraseniaOld.querySelector("input").disabled = !editar;
+    nuevaContrasenia.querySelector("input").disabled = !editar;
+
     contraseniaOld.setAttribute("editar", editar);
     nuevaContrasenia.setAttribute("editar", editar);
 }

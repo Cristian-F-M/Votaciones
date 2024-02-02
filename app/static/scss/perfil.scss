@@ -3,7 +3,10 @@ $background-form-label: #fff;
 body {
     margin: 0;
     padding-top: 60px;
-    height: 100vh;
+
+    @media screen and (min-width: 768px) {
+        height: 100vh;
+    }
 }
 
 main {
@@ -23,14 +26,22 @@ main {
             display: flex;
             flex-direction: row;
 
+            @media screen and (max-width: 768px) {
+                display: flex;
+                flex-direction: column-reverse;
+            }
+
             .datos-basicos,
             .datos-opcionales {
                 width: 50%;
-                // background-color: green;
                 display: flex;
                 flex-direction: column;
-                // justify-content: space-evenly;
+                justify-content: center;
                 align-items: center;
+
+                @media screen and (max-width: 768px) {
+                    width: 100%;
+                }
 
                 .titulo {
                     width: 100%;
@@ -177,17 +188,6 @@ main {
                             cursor: text;
                             color: #333;
                             letter-spacing: 1px;
-
-                            // &:not(
-                            //         [for="TelefonoUsuario"],
-                            //         [for="TipoDocumentoUsuario"],
-                            //         [for="DescripcionUsuario"]
-                            //     )::after {
-                            //     content: "*";
-                            //     color: #f00;
-                            //     // font-
-                            //     font-weight: 600;
-                            // }
                         }
 
                         input:focus + label,
@@ -264,13 +264,8 @@ main {
                 }
             }
 
-            ////////////////////////
             .datos-opcionales {
-                width: 50%;
-                // background-color: blue;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+
 
                 .c_foto-perfil {
                     width: fit-content;
