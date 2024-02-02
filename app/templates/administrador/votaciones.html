@@ -36,13 +36,13 @@
                     <div class="card-candidato">
                         <div class="c_nombre-candidato">
                             <h3>
-                                {{ rpActual.nombreUsuario if rpActual else 'No
-                                hay elegido' }}
+                                {{ rpActual.ganador.nombreUsuario if rpActual
+                                else 'No hay elegido' }}
                             </h3>
                         </div>
                         <div class="c_foto-candidato">
                             <img
-                                src="{{ url_for('static', filename='images/' ~ (rpActual.fotoUsuario if rpActual else 'Triste!.jpg')) }}"
+                                src="{{ url_for('static', filename='images/' ~ (rpActual.ganador.fotoUsuario if rpActual else 'Triste!.jpg')) }}"
                                 alt=""
                             />
                         </div>
@@ -75,7 +75,7 @@
                                             type="datetime-local"
                                             value="{{ votacion.fechaInicioVotacion }}"
                                             readonly
-                                            />
+                                        />
                                     </td>
                                     <td>
                                         {{ votacion.ganador.nombreUsuario if
@@ -196,7 +196,7 @@
                                                         >
                                                             <h3>
                                                                 {{
-                                                                rpActual.nombreUsuario
+                                                                rpActual.ganador.nombreUsuario
                                                                 if rpActual else
                                                                 'No hay elegido'
                                                                 }}
@@ -206,7 +206,7 @@
                                                             class="c_foto-candidato"
                                                         >
                                                             <img
-                                                                src="{{ url_for('static', filename='images/' ~ (rpActual.fotoUsuario if rpActual else 'Triste!.jpg')) }}"
+                                                                src="{{ url_for('static', filename='images/' ~ (rpActual.ganador.fotoUsuario if rpActual else 'Triste!.jpg')) }}"
                                                                 alt=""
                                                             />
                                                         </div>
@@ -222,6 +222,7 @@
                     </div>
                 </div>
             </div>
+            {% include 'componentes/alerta.html' %}
         </main>
     </body>
 </html>

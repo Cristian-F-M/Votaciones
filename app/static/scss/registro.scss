@@ -20,7 +20,7 @@ body {
 main {
     width: 100%;
     height: 100%;
-    
+
     .c_forms {
         width: 100%;
         height: 100%;
@@ -123,6 +123,13 @@ main {
                     font-size: 15px;
                     border-color: #666;
 
+                    &:required + label::after {
+                        content: "*";
+                        color: #f00;
+                        // font-
+                        font-weight: 600;
+                    }
+
                     &:focus {
                         outline-color: #666;
                         outline-style: solid;
@@ -153,23 +160,6 @@ main {
                     cursor: text;
                     color: #333;
                     letter-spacing: 1px;
-
-                    &:not(
-                            [for="TelefonoUsuario"],
-                            [for="TipoDocumentoUsuario"]
-                        )::after {
-                        content: "*";
-                        color: #f00;
-                        // font-
-                        font-weight: 600;
-                    }
-
-                    &[for="TipoDocumentoUsuario"] {
-                        background-color: $background-form-label;
-                        color: #000;
-                        top: 0;
-                        transform: translateY(-50%) translateX(10px);
-                    }
                 }
 
                 input:focus + label,
@@ -196,6 +186,13 @@ main {
                         display: block;
                     }
                 }
+            }
+
+            .c_select label {
+                background-color: $background-form-label;
+                color: #000;
+                top: 0;
+                transform: translateY(-50%) translateX(10px);
             }
 
             .c_button {

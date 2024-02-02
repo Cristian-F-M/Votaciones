@@ -1,6 +1,8 @@
 const inputsCheckBox = document.querySelectorAll('input[type="checkbox"]');
 const BTNVer = document.querySelectorAll("#Ver");
 
+scrollSize = 0
+
 inputsCheckBox.forEach((input) => {
     let label = document.querySelector(`label[for="${input.id}"]`);
 

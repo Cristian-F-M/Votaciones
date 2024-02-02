@@ -32,9 +32,3 @@ class Usuario(db.Model, UserMixin):
 
     def get_id(self):
         return self.idUsuario
-
-
-@login_manager.user_loader
-def load_user(usuario):
-    usuarioS = Usuario.query.get(int(usuario))
-    return usuarioS

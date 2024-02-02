@@ -1,9 +1,16 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+from flask import (
+    Blueprint,
+    render_template,
+    request,
+    redirect,
+    url_for,
+    flash,
+    session,
+)
 from flask_login import login_required, logout_user, login_user, current_user
 from flask import Blueprint, render_template
 from sqlalchemy.exc import IntegrityError
-import bcrypt
-import re, os, random
+import bcrypt, random, re, os
 from dotenv import load_dotenv
 import smtplib
 from email.mime.text import MIMEText
@@ -68,7 +75,7 @@ def iniciar_sesion():
     login_user(usuario)
 
     usernameUsuario = getUsername(usuario)
-    session['usernameUsuario'] = usernameUsuario
+    session["usernameUsuario"] = usernameUsuario
 
     flash(["informacion", f"Bienvenido/a {usernameUsuario}"], "session")
 
@@ -171,8 +178,64 @@ def verificarCorreo():
 
 
 @bp.route("/perfil", methods=["GET"])
+@login_required
 def perfil():
-    return render_template("usuario-perfil.html")
+    tiposDocumento = TipoDocumento.query.all()
+    return render_template("usuario-perfil.html", TiposDocumento=tiposDocumento)
+
+
+@bp.route("/editar-perfil/<int:usuario>", methods=["POST"])
+@login_required
+def editar_perfil(usuario):
+    usuario = Usuario.query.get_or_404(usuario)
+
+    usuario.nombreUsuario = request.form.get("nombreUsuario", usuario.nombreUsuario)
+    usuario.apellidoUsuario = request.form.get(
+        "apellidoUsuario", usuario.apellidoUsuario
+    )
+    usuario.documentoUsuario = request.form.get(
+        "documentoUsuario", usuario.documentoUsuario
+    )
+    usuario.correoUsuario = request.form.get("correoUsuario", usuario.correoUsuario)
+    usuario.telefonoUsuario = request.form.get(
+        "telefonoUsuario", usuario.telefonoUsuario
+    )
+    usuario.descripcionUsuario = request.form.get(
+        "descripcionUsuario", usuario.descripcionUsuario
+    )
+
+    if "fotoUsuario" in request.files:
+        foto = request.files["fotoUsuario"]
+        if foto.filename != "":
+            usuario.fotoUsuario = nameFotoUsuario(usuario, foto.filename)
+            guardarFotoUsuario(foto, usuario)
+
+    if "contraseniaOldUsuario" in request.form and "contraseniaUsuario" in request.form:
+        contrasenia_old = request.form["contraseniaOldUsuario"]
+        contrasenia_nueva = request.form["contraseniaUsuario"]
+        if contrasenia_old and contrasenia_nueva:
+            if bcrypt.checkpw(
+                contrasenia_old.encode("utf-8"),
+                usuario.contraseniaUsuario.encode("utf-8"),
+            ):
+                usuario.contraseniaUsuario = bcrypt.hashpw(
+                    contrasenia_nueva.encode("utf-8"), bcrypt.gensalt()
+                )
+            else:
+                flash(["error", "Las contraseñas no coinciden"], "session")
+                return redirect(
+                    url_for("usuario.editar_perfil", usuario=usuario.idUsuario)
+                )
+        else:
+            flash(
+                ["error", "Se requieren la contraseña anterior y la nueva"], "session"
+            )
+            return redirect(url_for("usuario.editar_perfil", usuario=usuario.idUsuario))
+
+    db.session.commit()
+
+    flash(["informacion", "Perfil actualizado"], "session")
+    return redirect(url_for("administrador.inicio_administrador"))
 
 
 def validarContraseña(contrasenia):
@@ -185,45 +248,15 @@ def columnaDuplicada(exOrigin):
 
 
 def getCodigo(tamanio):
-    mayus = [
-        "A",
-        "B",
-        "C",
-        "D",
-        "E",
-        "F",
-        "G",
-        "H",
-        "I",
-        "J",
-        "K",
-        "L",
-        "M",
-        "N",
-        "O",
-        "P",
-        "Q",
-        "R",
-        "S",
-        "T",
-        "U",
-        "V",
-        "W",
-        "X",
-        "Y",
-        "Z",
-    ]
-    digitos = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
+    mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    digitos = "1234567890"
+    opciones = [mayus, digitos]
 
-    a = [mayus, digitos]
     codigo = ""
+    for _ in range(tamanio):
+        opcion = random.choice(opciones)
+        codigo += random.choice(opcion)
 
-    for i in range(tamanio):
-        nList = random.randint(0, len(a) - 1)
-        list = a[nList]
-        nCaracter = random.randint(0, len(list) - 1)
-        caracter = str(list[nCaracter])
-        codigo += caracter
     return codigo
 
 
@@ -257,3 +290,23 @@ def getUsername(usuario):
     nombre = usuario.nombreUsuario.split(" ")[0]
     apellido = usuario.apellidoUsuario.split(" ")[0]
     return nombre + " " + apellido
+
+
+def guardarFotoUsuario(file, usuario):
+    from run import app
+
+    filename = file.filename
+
+    destination_folder = os.path.join(app.root_path, "static", "images")
+
+    file.save(
+        os.path.join(
+            destination_folder, nameFotoUsuario(usuario=usuario, filename=filename)
+        )
+    )
+
+
+def nameFotoUsuario(usuario, filename):
+    formato = os.path.splitext(filename)[1]
+    name = f"perfil - {usuario.nombreUsuario}{formato}"
+    return name
