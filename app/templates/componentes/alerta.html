@@ -6,7 +6,7 @@
 <script src="{{ url_for('static', filename='js/alerta.js') }}" defer></script>
 
 {% if session %}
-<div class="c_mensajes">
+<div class="c_mensajes" id="Mensajes">
     <div class="mensaje {{ 'text-error' if session[0] == 'error' else ''}}">
         <p>{{ session[-1] }}</p>
         <div class="c_carga"></div>

@@ -1,0 +1,22 @@
+<link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/footer.css') }}"
+/>
+<script src="{{ url_for('static', filename='js/footer.js') }}" defer></script>
+
+<footer>
+    <div class="c_informacion">
+        <div class="derechos">
+            &copy; <span data-id="anio"></span> Todos los derechos reservados
+        </div>
+        <div class="actualizacion">
+            Ultima actualización: <span data-id="anio"></span>
+        </div>
+    </div>
+    <div class="c_logo">
+        <img
+            src="{{ url_for('static', filename='images/logo-CM.png') }}"
+            alt="Logo CM"
+        />
+    </div>
+</footer>

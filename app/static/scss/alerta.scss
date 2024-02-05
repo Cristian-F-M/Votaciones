@@ -4,7 +4,7 @@
 
 body {
     // background-color: #bbb;
-    margin: 0;
+    // margin: 0;
     overflow-x: hidden;
     min-height: 100vh;
 }
@@ -28,7 +28,7 @@ body {
 
 
     @media screen AND (max-width: 991px) {
-        position: absolute;
+        position: fixed;
         height: 60px;
         width: 100%;
         top: 0;

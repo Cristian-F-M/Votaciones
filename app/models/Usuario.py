@@ -25,8 +25,8 @@ class Usuario(db.Model, UserMixin):
     estadoUsuario = db.Column(
         db.Integer, db.ForeignKey("estados.idEstado"), nullable=False, default=1
     )
-    idVoto = db.Column(db.Integer, db.ForeignKey("voto.idVoto"))
-    votoUsuario = db.relationship("Voto", backref="usuario")
+    voto = db.Column(db.Integer, db.ForeignKey("usuarios.idUsuario"))
+    votoUsuario = db.relationship("Usuario", remote_side=[idUsuario])
     contraseniaUsuario = db.Column(db.String(256))
     codigoUsuario = db.Column(db.String(10))
 

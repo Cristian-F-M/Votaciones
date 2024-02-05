@@ -13,6 +13,7 @@ from sqlalchemy.exc import IntegrityError
 import bcrypt, random, re, os
 from dotenv import load_dotenv
 import smtplib
+from datetime import datetime
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -24,6 +25,7 @@ from email.mime.multipart import MIMEMultipart
 from app.models.Usuario import Usuario
 from app.models.TipoDocumento import TipoDocumento
 from app.models.Rol import Rol
+from app.models.Votacion import Votacion
 from app.models.Estado import Estado
 
 # La línea `from app import db` está importando el objeto `db` desde el módulo `app`. Este objeto es
@@ -180,8 +182,9 @@ def verificarCorreo():
 @bp.route("/perfil", methods=["GET"])
 @login_required
 def perfil():
+    ultimaVotacion = Votacion.query.first()
     tiposDocumento = TipoDocumento.query.all()
-    return render_template("usuario-perfil.html", TiposDocumento=tiposDocumento)
+    return render_template("usuario-perfil.html", TiposDocumento=tiposDocumento, votacion=ultimaVotacion)
 
 
 @bp.route("/editar-perfil/<int:usuario>", methods=["POST"])
@@ -236,6 +239,41 @@ def editar_perfil(usuario):
 
     flash(["informacion", "Perfil actualizado"], "session")
     return redirect(url_for("administrador.inicio_administrador"))
+
+
+@bp.route("/Enviar-sugerencias", methods=["POST"])
+def enviarSugerencia():
+
+    load_dotenv()
+
+    data = request.json
+    correo = data["correo"]
+    mensaje = data["mensaje"]
+    nombre = data["nombre"]
+
+    fecha = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    mensaje += f"""
+    
+Envía:
+{correo}
+{nombre}
+{fecha}"""
+
+    servidor_smtp = smtplib.SMTP(os.getenv("smtp_host"), os.getenv("smtp_port"))
+    servidor_smtp.starttls()
+    servidor_smtp.login(os.getenv("smtp_user"), os.getenv("smtp_password"))
+
+    msg = MIMEMultipart()
+    msg["From"] = correo
+    msg["To"] = os.getenv("smtp_user")
+    msg["Subject"] = "Sugerencias"
+    msg.attach(MIMEText(mensaje))
+
+    servidor_smtp.sendmail(correo, os.getenv("smtp_user"), msg.as_string())
+    servidor_smtp.quit()
+
+    return "Se ha enviado tu sugerencia"
 
 
 def validarContraseña(contrasenia):

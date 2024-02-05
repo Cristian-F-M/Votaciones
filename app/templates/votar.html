@@ -29,7 +29,7 @@
                 <h1>Candidatos</h1>
             </div>
             <span class="separador horizontal"></span>
-            {% if candidatos|length > 1%}
+            {% if candidatos|length > 1 and votacion.estadoVotacion == 3 %}
             <form action="">
                 <div class="c_candidatos">
                     {% for candidato in candidatos %} {% if not
@@ -139,9 +139,9 @@
                 </div>
                 {% endif %}
             </form>
-            {% endif %} {% if candidatos|length <= 1 %}
+            {% endif %} {% if candidatos|length <= 1 or votacion.estadoVotacion != 3 %}
             <div class="c_noCandidatos">
-                <h2>No hay Candidatos {{ candidatos|length }}</h2>
+                <h2>No disponible</h2>
                 <p>Aun no hay canditos para elegir</p>
                 <p>o no hay votaciones activas</p>
             </div>

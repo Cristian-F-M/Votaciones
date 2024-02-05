@@ -15,6 +15,9 @@ fotoUsuario.addEventListener("click", () => {
     inputFile.showPicker();
 });
 
+scrollSize = 20
+
+
 OverlayFoto.addEventListener("click", () => {
     inputFile.showPicker();
 });

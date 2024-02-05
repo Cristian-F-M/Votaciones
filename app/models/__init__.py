@@ -12,6 +12,5 @@ from app.models.Falta import Falta
 from app.models.Rol import Rol
 from app.models.Sancion import Sancion
 from app.models.TipoDocumento import TipoDocumento
-from app.models.Voto import Voto
 from app.models.Usuario import Usuario
 from app.models.Votacion import Votacion

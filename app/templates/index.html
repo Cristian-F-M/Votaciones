@@ -3,7 +3,10 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+        <link
+            rel="icon"
+            href="{{ url_for('static', filename='images/favicon.ico') }}"
+        />
         <link
             rel="stylesheet"
             href="{{ url_for('static', filename='css/icons/bootstrap-icons.css') }}"
@@ -29,21 +32,30 @@
                     <h3>Centro de gestion Agroempresarial del oriente</h3>
                 </div>
             </div>
-            <div class="descripcion">
-                <p>
-                    "Las elecciones son un proceso fundamental que permite a la
-                    comunidad universitaria elegir representantes y tomar
-                    decisiones importantes. A través de tu participación activa
-                    en este proceso, contribuyes directamente a dar forma al
-                    futuro de nuestra institución. Tu voto es una voz poderosa
-                    que influye en la dirección y las políticas de la
-                    universidad. Participar en las elecciones es una oportunidad
-                    única para expresar tus opiniones y valores, y para ser
-                    parte integral de la toma de decisiones democrática en
-                    nuestra comunidad académica. ¡Tu participación cuenta y hace
-                    la diferencia en la construcción de un campus más inclusivo,
-                    vibrante y comprometido!"
-                </p>
+            <div class="c_descripcion">
+                <div class="descripcion">
+                    <p>
+                        Las elecciones son un proceso fundamental que permite a
+                        la comunidad universitaria elegir representantes y tomar
+                        decisiones importantes. A través de tu participación
+                        activa en este proceso, contribuyes directamente a dar
+                        forma al futuro de nuestra institución. Tu voto es una
+                        voz poderosa que influye en la dirección y las políticas
+                        de la universidad. Participar en las elecciones es una
+                        oportunidad única para expresar tus opiniones y valores,
+                        y para ser parte integral de la toma de decisiones
+                        democrática en nuestra comunidad académica. ¡Tu
+                        participación cuenta y hace la diferencia en la
+                        construcción de un campus más inclusivo, vibrante y
+                        comprometido!
+                    </p>
+                </div>
+                <div class="c_img">
+                    <img
+                        src="{{ url_for('static', filename='images/logo-SENA.jpg') }}"
+                        alt=""
+                    />
+                </div>
             </div>
             <div class="c_funciones">
                 <div class="separador-title">
@@ -153,11 +165,126 @@
                 </div>
             </div>
 
-            <br><br><br><br><br><br><br><br><br><br>
-            <div id="Nosotros">Nosotros</div>
-            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+            <div id="Nosotros" class="c_nosotros">
+                <div class="separador horizontal"></div>
+                <div class="nosotros drop-down">
+                    <div class="c_titulo">
+                        <h3>Nosotros</h3>
+                        <i class="bi bi-chevron-compact-down"></i>
+                    </div>
+                    <div class="c_contenido">
+                        Esta aplicación está diseñada para mejorar el proceso de
+                        elección de representantes que se lleva a cabo
+                        anualmente en el centro. Con una interfaz intuitiva y
+                        fácil de usar, está pensada para facilitar la
+                        participación de los aprendices en este importante
+                        proceso de selección.
+                    </div>
+                </div>
+                <div class="c_mision drop-down">
+                    <div class="c_titulo">
+                        <h3>Misión</h3>
+                        <i class="bi bi-chevron-compact-down"></i>
+                    </div>
+                    <div class="c_contenido">
+                        Nuestra misión es proporcionar una plataforma innovadora
+                        y accesible que mejore el proceso de elecciones de
+                        representantes en los centros educativos. Nos
+                        comprometemos a ofrecer una experiencia de votación
+                        transparente, inclusiva y eficiente, facilitando la
+                        participación activa de todos los aprendices en la
+                        elección de sus representantes.
+                    </div>
+                </div>
+                <div class="c_vision drop-down">
+                    <div class="c_titulo">
+                        <h3>Visión</h3>
+                        <i class="bi bi-chevron-compact-down"></i>
+                    </div>
+                    <div class="c_contenido">
+                        Nuestra visión es ser la principal herramienta
+                        tecnológica utilizada en los centros educativos para
+                        llevar a cabo elecciones democráticas y transparentes de
+                        representantes. Aspiramos a ser reconocidos por nuestra
+                        fiabilidad, seguridad y facilidad de uso, contribuyendo
+                        así al fortalecimiento de la democracia estudiantil y al
+                        desarrollo de líderes comprometidos con su comunidad
+                    </div>
+                </div>
+                <div class="c_equipo drop-down">
+                    <div class="c_titulo">
+                        <h3>Equipo</h3>
+                        <i class="bi bi-chevron-compact-down"></i>
+                    </div>
+                    <div class="c_contenido">
+                        <ul>
+                            <li>Cristian Morales - Desarrollador Backend</li>
+                            <li>Cristian Morales - Desarrollador Frontend</li>
+                            <li>
+                                Cristian Morales - Desarrollo de Base de Datos
+                            </li>
+                            <li>
+                                Cristian Morales - Administrador del sitio web
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
 
-            <footer id="Footer">Footer</footer>
+            <div class="c_comentarios-sugerencias">
+                <div class="c_mensaje">
+                    <h2>Para nosotros en importante tu opinion.</h2>
+                    <p>
+                        Envianos un mensaje con tus sujerencias y las tomaremos
+                        en cuenta
+                    </p>
+                </div>
+                <div class="separador vertical"></div>
+                <div class="separador horizontal"></div>
+                <div class="c_form">
+                    <form action="" method="post">
+                        <div class="mid">
+                            <div class="c_input">
+                                <input
+                                    type="text"
+                                    id="Nombre"
+                                    placeholder=""
+                                    required
+                                />
+                                <label for="Nombre">Nombre</label>
+                            </div>
+
+                            <div class="c_input">
+                                <input
+                                    type="email"
+                                    id="Correo"
+                                    placeholder=""
+                                    required
+                                />
+                                <label for="Correo">Correo electronico</label>
+                            </div>
+                        </div>
+
+                        <div class="c_input c_textarea">
+                            <textarea
+                                name=""
+                                id="Mensaje"
+                                placeholder=""
+                                required
+                            ></textarea>
+                            <label for="Mensaje">Mensaje</label>
+                        </div>
+
+                        <div class="c_button">
+                            <button type="button" id="EnviarCorreo">
+                                Enviar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {% include 'componentes/footer.html' %}
         </main>
 
         {% include 'componentes/scroll.html' %} {% include

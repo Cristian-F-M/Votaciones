@@ -41,6 +41,7 @@ main {
 
                 @media screen and (max-width: 768px) {
                     width: 100%;
+                    margin-top: 20px;
                 }
 
                 .titulo {
@@ -179,7 +180,7 @@ main {
                             position: absolute;
                             top: 50%;
                             transform: translateY(-50%) translateX(15px);
-                            z-index: 20;
+                            z-index: 9;
                             padding: 1px 5px;
                             transition: transform 0.35s, top 0.35s,
                                 background-color 0.4s;

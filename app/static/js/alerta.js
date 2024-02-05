@@ -1,10 +1,10 @@
-const c_mensajes = document.querySelector(".c_mensajes");
+const c_mensajes = document.getElementById("Mensajes");
 
 document.addEventListener("DOMContentLoaded", () => {
     iniciarAnimaciones();
 });
 
-async function iniciarAnimaciones() {
+async function iniciarAnimaciones(mss) {
     let mensajes = document.querySelectorAll(".mensaje");
 
     mensajes.forEach(async (mensaje, index) => {
@@ -42,7 +42,13 @@ async function iniciarAnimaciones() {
 
             mensaje.addEventListener("animationend", () => {
                 setTimeout(() => {
-                    c_mensajes.style.display = "none";
+                    if (c_mensajes) {
+                        c_mensajes.style.display = "none";
+                    }
+
+                    if (mss) {
+                        mss.style.display = "none";
+                    }
                 }, 500);
             });
         });
