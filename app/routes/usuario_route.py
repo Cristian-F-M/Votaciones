@@ -145,6 +145,8 @@ def registrar():
         except IntegrityError as ex:
             db.session.rollback()
             columna = columnaDuplicada(ex.orig)
+
+            print(ex.orig)
             inputName = columna.split("U")[0]
             error = f"El {inputName} no está disponible"
 
@@ -184,7 +186,22 @@ def verificarCorreo():
 def perfil():
     ultimaVotacion = Votacion.query.first()
     tiposDocumento = TipoDocumento.query.all()
-    return render_template("usuario-perfil.html", TiposDocumento=tiposDocumento, votacion=ultimaVotacion)
+    return render_template(
+        "usuario-perfil.html", TiposDocumento=tiposDocumento, votacion=ultimaVotacion
+    )
+
+
+@bp.route("/Votar", methods=["POST"])
+def votar():
+    candidato = request.form["candidatoUsuario"]
+
+    usuario = Usuario.query.get_or_404(current_user.idUsuario)
+    usuario.voto = candidato
+
+    db.session.commit()
+
+    flash(["informacion", "Voto registrado con exito"], "session")
+    return redirect(url_for("administrador.inicio_administrador"))
 
 
 @bp.route("/editar-perfil/<int:usuario>", methods=["POST"])
@@ -210,6 +227,7 @@ def editar_perfil(usuario):
     if "fotoUsuario" in request.files:
         foto = request.files["fotoUsuario"]
         if foto.filename != "":
+            eliminarFoto(current_user.idUsuario)
             usuario.fotoUsuario = nameFotoUsuario(usuario, foto.filename)
             guardarFotoUsuario(foto, usuario)
 
@@ -265,12 +283,14 @@ Envía:
     servidor_smtp.login(os.getenv("smtp_user"), os.getenv("smtp_password"))
 
     msg = MIMEMultipart()
-    msg["From"] = correo
-    msg["To"] = os.getenv("smtp_user")
+    msg["From"] = os.getenv("smtp_user")
+    msg["To"] = os.getenv("smtp_user_to")
     msg["Subject"] = "Sugerencias"
     msg.attach(MIMEText(mensaje))
 
-    servidor_smtp.sendmail(correo, os.getenv("smtp_user"), msg.as_string())
+    servidor_smtp.sendmail(
+        os.getenv("smtp_user_to"), os.getenv("smtp_user_to"), msg.as_string()
+    )
     servidor_smtp.quit()
 
     return "Se ha enviado tu sugerencia"
@@ -346,5 +366,16 @@ def guardarFotoUsuario(file, usuario):
 
 def nameFotoUsuario(usuario, filename):
     formato = os.path.splitext(filename)[1]
-    name = f"perfil - {usuario.nombreUsuario}{formato}"
+    name = f"perfil_{usuario.nombreUsuario}{formato}"
     return name
+
+
+def eliminarFoto(idUsuario):
+    from run import app
+
+    fotoUsuario = Usuario.query.get_or_404(idUsuario).fotoUsuario
+
+    ruta_imagen = os.path.join(app.root_path, "static", "images", fotoUsuario)
+
+    if os.path.exists(ruta_imagen):
+        os.remove(ruta_imagen)

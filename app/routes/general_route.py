@@ -1,9 +1,17 @@
-from flask import Blueprint, render_template
-from flask_login import login_required
+from flask import Blueprint, render_template, redirect, url_for
+from flask_login import login_required, current_user
 from app.models.TipoDocumento import TipoDocumento
 from app.models.Usuario import Usuario
 from app.models.Votacion import Votacion
-import plotly.graph_objs as go
+import matplotlib.pyplot as plt
+import numpy as np
+from sqlalchemy import not_, asc
+import matplotlib.pyplot as plt
+from io import BytesIO
+import base64
+from sqlalchemy.orm import aliased
+from datetime import datetime
+
 
 from app import db
 
@@ -13,6 +21,9 @@ bp = Blueprint("general", __name__)
 
 @bp.route("/")
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for("administrador.inicio_administrador"))
+
     TiposDocumento = TipoDocumento.query.all()
     return render_template("auth/login.html", TiposDocumento=TiposDocumento)
 
@@ -41,42 +52,47 @@ def votar():
 @bp.route("/Resultados")
 @login_required
 def resultados():
+    usuario_alias = aliased(Usuario)
     votos_por_candidato = (
-        db.session.query(Usuario.voto, db.func.count(Usuario.voto))
-        .group_by(Usuario.voto)
+        db.session.query(usuario_alias.nombreUsuario, db.func.count(Usuario.voto))
+        .join(usuario_alias, Usuario.voto == usuario_alias.idUsuario)
+        .filter(Usuario.voto.isnot(None))
+        .group_by(usuario_alias.nombreUsuario)
         .all()
     )
-
-    print(votos_por_candidato)
-    graph_json = generar_grafico_barras(votos_por_candidato)
-
-
+    votacion = Votacion.query.order_by(asc(Votacion.idVotacion)).first()
+    
     ultimaVotacion = Votacion.query.first()
+    anio = ultimaVotacion.fechaInicioVotacion.year
+    # ////////////////////
+
+    votos = dict(votos_por_candidato)
+
+    # Luego, puedes seguir con el mismo código que proporcionaste para generar el gráfico de torta
+    nombres = list(votos.keys())
+    valores = list(votos.values())
+
+    imagen_base64 = getGrafico(nombres=nombres, valores=valores, anio=anio)
+    # ////////////////////
+
     return render_template(
-        "resultados-votacion.html", votacion=ultimaVotacion, rs=votos_por_candidato, graph_json=graph_json
+        "resultados-votacion.html",
+        votacion=ultimaVotacion,
+        graficoVotos=imagen_base64,
     )
 
 
-# Función para generar el gráfico de barras
-def generar_grafico_barras(conteo_votos):
-    # Separar los datos en dos listas: candidatos y cantidades de votos
-    candidatos = [voto[0] for voto in conteo_votos]
-    cant_votos = [voto[1] for voto in conteo_votos]
+def getGrafico(valores, nombres, anio):
+    plt.figure(figsize=(8, 6), facecolor="none")
+    plt.pie(valores, labels=nombres, autopct="%1.1f%%", colors=plt.cm.tab20.colors)
+    # plt.title(f"Resultado de las votaciones {anio}")
 
-    # Crear el objeto de datos para el gráfico de barras
-    data = [go.Bar(x=candidatos, y=cant_votos, marker=dict(color="rgb(26, 118, 255)"))]
+    buffer = BytesIO()
+    plt.savefig(buffer, format="png")
+    buffer.seek(0)
 
-    # Configurar el diseño del gráfico
-    layout = go.Layout(
-        title="Conteo de Votos por Candidato",
-        xaxis=dict(title="Candidato"),
-        yaxis=dict(title="Cantidad de Votos"),
-    )
+    # Convertir el gráfico a formato base64 para mostrarlo en HTML
+    imagen_base64 = base64.b64encode(buffer.getvalue()).decode()
+    buffer.close()
 
-    # Crear la figura del gráfico
-    fig = go.Figure(data=data, layout=layout)
-
-    # Convertir la figura en un objeto JSON
-    graph_json = fig.to_json()
-
-    return graph_json
+    return imagen_base64

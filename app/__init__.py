@@ -24,9 +24,10 @@ def create_app():
         return usuario
 
 
-    from app.routes import usuario_route, general_route, administrador_route
+    from app.routes import usuario_route, general_route, administrador_route, votaciones_route
     
     app.register_blueprint(usuario_route.bp)
     app.register_blueprint(general_route.bp)
     app.register_blueprint(administrador_route.bp)
+    app.register_blueprint(votaciones_route.bp)
     return app

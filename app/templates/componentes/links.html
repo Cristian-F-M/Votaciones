@@ -1,7 +1,7 @@
 <nav>
     <ul>
         <li><a href="{{ url_for('general.inicio') }}">Inicio</a></li>
-        {% if current_user.voto == null or votacion.estadoVotacion == 3%}
+        {% if current_user.voto == null and votacion.estadoVotacion == 3%}
         <li><a href="{{ url_for('general.votar') }}">Votar</a></li>
         {% else %}
         <li>

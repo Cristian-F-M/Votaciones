@@ -1,7 +1,13 @@
 const inputsCheckBox = document.querySelectorAll('input[type="checkbox"]');
 const BTNVer = document.querySelectorAll("#Ver");
+const oNuevaVotacion = document.getElementById("ONuevaVotacion");
+const btnNuevaVotacion = document.getElementById("BTNNuevaVotacion");
+const cerrarNuevaVotacion = document.getElementById("CerrarNuevaVotacion");
+const nuevaVotacion = document.getElementById("NuevaVotacion");
+const fechaInicio = document.getElementById("FechaInicio");
+const eliminarVotacion = document.querySelectorAll("#EliminarVotacion");
 
-scrollSize = 0
+scrollSize = 0;
 
 inputsCheckBox.forEach((input) => {
     let label = document.querySelector(`label[for="${input.id}"]`);
@@ -55,3 +61,30 @@ function hideInformacionVotacion(overlay, informacion) {
         overlay.removeAttribute("show");
     }, 300);
 }
+
+btnNuevaVotacion.addEventListener("click", () => {
+    fechaInicio.value = new Date(Date.now()).toISOString().substring(0, 10);
+
+    oNuevaVotacion.setAttribute("show", true);
+    setTimeout(() => {
+        nuevaVotacion.setAttribute("show", true);
+    }, 30);
+});
+
+cerrarNuevaVotacion.addEventListener("click", () => {
+    fechaInicio.value = "";
+    nuevaVotacion.setAttribute("show", false);
+    setTimeout(() => {
+        oNuevaVotacion.setAttribute("show", false);
+    }, 80);
+});
+
+eliminarVotacion.forEach((btn) => {
+    let form = document.querySelector(
+        `form[data-id='${btn.getAttribute("data-id")}']`
+    );
+
+    btn.addEventListener("click", () => {
+        form.submit();
+    });
+});

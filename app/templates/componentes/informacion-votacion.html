@@ -1,0 +1,115 @@
+<div class="o_informacion-votacion" data-id="{{ votacion.ganadorVotacion }}">
+    <div class="informacion-votacion">
+        <a href="" class="cerrar">
+            <i class="bi bi-x"></i>
+        </a>
+        <div class="c_titulo">
+            <h3>Votacion</h3>
+        </div>
+        <div class="c_votos-candidato">
+            <div class="c_fechas-votos">
+                <form
+                    action="{{ url_for('votaciones.finalizarVotacion', idVotacion=votacion.idVotacion) }}"
+                    method="POST"
+                >
+                    <div class="c_fechas">
+                        <div class="c_input-fijo" data-name="fechaInicio">
+                            <input
+                                type="datetime-local"
+                                value="{{ votacion.fechaInicioVotacion }}"
+                                name="fechaInicioVotacion"
+                                id="FechaInicioVotacion"
+                            />
+                            <label for="FechaInicioVotacion">Inicio</label>
+                        </div>
+                        <div class="c_input-fijo" data-name="fechaFin">
+                            <input
+                                type="datetime-local"
+                                value="{{ votacion.fechaFinVotacion }}"
+                                name="fechaInicioVotacion"
+                                id="FechaFinVotacion"
+                            />
+                            <label for="FechaFinVotacion">Final</label>
+                        </div>
+                    </div>
+                    <div class="c_votos">
+                        <div
+                            class="c_input-fijo"
+                            data-name="cantVotosCandidato"
+                        >
+                            <input
+                                name=""
+                                id="CantidadVotosCandidato"
+                                type="text"
+                                value="{{ votacion.cantVotosVotacion if votacion.cantVotosVotacion else 'N/A' }}"
+                                placeholder=""
+                                readonly
+                            />
+                            <label for="CantidadVotosCandidato"
+                                >Cantidad de votos</label
+                            >
+                        </div>
+                        <div class="c_input-fijo">
+                            <input
+                                type="text"
+                                value="{{ votacion.porcentajeVotosVotacion ~ '%' if votacion.porcentajeVotosVotacion else 'N/A'}}"
+                                id="PorcentajeVotosVotacion"
+                                readonly
+                            />
+                            <label for="PorcentajeVotosVotacion"
+                                >Porciento de votos</label
+                            >
+                        </div>
+                        <div class="c_input-fijo" data-name="totalVotos">
+                            <input
+                                type="text"
+                                value="{{ votacion.totalVotosVotacion if votacion.totalVotosVotacion else 'N/A'}}"
+                                id="TotalVotosVotacion"
+                                readonly
+                            />
+                            <label for="TotalVotosVotacion">Total Votos</label>
+                        </div>
+
+                        <div class="c_button">
+                            {% if votacion.estadoVotacion == 3 %}
+                            <button>Finalizar</button>
+                            {% endif %}
+
+                            <button
+                                type="button"
+                                data-id="{{ votacion.idVotacion }}"
+                                class="{{ 'w-100' if votacion.estadoVotacion != 3 else '' }}"
+                                id="EliminarVotacion"
+                            >
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                <form
+                    action="{{ url_for('votaciones.eliminarVotacion', idVotacion=votacion.idVotacion) }}"
+                    method="POST"
+                    data-id="{{ votacion.idVotacion }}"
+                    id="FormularioEliminarVotacion"
+                ></form>
+            </div>
+
+            <div class="c_candidato">
+                <div class="card-candidato">
+                    <div class="c_nombre-candidato">
+                        <h3>
+                            {{ rpActual.ganador.nombreUsuario if
+                            rpActual.ganadorVotacion else 'No hay elegido' }}
+                        </h3>
+                    </div>
+                    <div class="c_foto-candidato">
+                        <img
+                            src="{{ url_for('static', filename='images/' ~ (rpActual.ganador.fotoUsuario if rpActual.ganadorVotacion.fotoUsuario else 'Triste!.jpg')) }}"
+                            alt=""
+                        />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

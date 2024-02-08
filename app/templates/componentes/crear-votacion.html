@@ -1,0 +1,34 @@
+<div id="ONuevaVotacion" class="o_nueva-votacion" show="false">
+    <div id="NuevaVotacion" class="c_nueva-votacion" show="false">
+        <header>
+            <i id="CerrarNuevaVotacion" class="bi bi-x-lg"></i>
+            <h2>Nueva votación</h2>
+        </header>
+        <div class="c_informacion">
+            <p>Quieres iniciar una nueva votación?</p>
+        </div>
+        <form action="{{ url_for('votaciones.crear') }}" method="post">
+            <div class="c_input fijo">
+                <input
+                    type="date"
+                    name="fechaInicioVotacion"
+                    id="FechaInicio"
+                    readonly
+                />
+                <label for="FechaInicio">Inicio</label>
+            </div>
+            <div class="c_input fijo">
+                <input
+                    type="datetime-local"
+                    name="fechaFinVotacion"
+                    id="FechaFin"
+                    required
+                />
+                <label for="FechaFin">Fin</label>
+            </div>
+            <div class="c_button">
+                <button name="">Crear</button>
+            </div>
+        </form>
+    </div>
+</div>

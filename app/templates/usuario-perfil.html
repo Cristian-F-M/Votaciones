@@ -186,7 +186,7 @@
                     <div class="datos-opcionales">
                         <div class="c_foto-perfil">
                             <div class="foto">
-                                <img src="{{ url_for('static', filename='images/' + (current_user.fotoUsuario if current_user.fotousuario != None else 'Triste!.jpg')) }}" alt="Foto de {{ session['usernameUsuario'] }}" 
+                                <img src="{{ url_for('static', filename='images/' ~ (current_user.fotoUsuario if current_user.fotousuario != None else 'Triste!.jpg')) }}" alt="Foto de {{ session['usernameUsuario'] }}" 
                                     id="imgFotoUsuario"
                                 >
                                 <div class="c_overlay" id="Overlay-foto">

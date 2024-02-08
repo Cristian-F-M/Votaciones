@@ -13,3 +13,4 @@ bp = Blueprint('main', __name__)
 from app.routes import usuario_route
 from app.routes import general_route
 from app.routes import administrador_route
+from app.routes import votaciones_route

@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, session, redirect, url_for
+from sqlalchemy import desc
 from flask_login import login_required, current_user
 from app.models.TipoDocumento import TipoDocumento
 from app.models.Usuario import Usuario
@@ -24,8 +25,8 @@ def votaciones():
     if not isAdmin():
         return redirect(url_for("general.inicio"))
 
-    votaciones = Votacion.query.all()
-    rpActual = Votacion.query.filter(Votacion.ganadorVotacion != None).first()
+    votaciones = Votacion.query.order_by(desc(Votacion.idVotacion)).all()
+    rpActual = Votacion.query.order_by(desc(Votacion.idVotacion)).first()
     return render_template("administrador/votaciones.html", votaciones=votaciones, rpActual=rpActual)
 
 

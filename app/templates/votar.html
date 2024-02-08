@@ -30,7 +30,7 @@
             </div>
             <span class="separador horizontal"></span>
             {% if candidatos|length > 1 and votacion.estadoVotacion == 3 %}
-            <form action="">
+            <form action="{{ url_for('usuario.votar') }}" method="POST">
                 <div class="c_candidatos">
                     {% for candidato in candidatos %} {% if not
                     candidato.nombreUsuario == 'Voto en Blanco' %}
@@ -83,7 +83,8 @@
                                         alt="Foto de {{ candidato.nombreUsuario }}"
                                     />
                                     <p>
-                                        {% if candidato.descripcionUsuario %} {{
+                                        {% if candidato.descripcionUsuario !=
+                                        'None' %} {{
                                         candidato.descripcionUsuario }} {% else
                                         %} Sin descripción {% endif %}
                                     </p>
@@ -139,7 +140,8 @@
                 </div>
                 {% endif %}
             </form>
-            {% endif %} {% if candidatos|length <= 1 or votacion.estadoVotacion != 3 %}
+            {% endif %} {% if candidatos|length <= 1 or votacion.estadoVotacion
+            != 3 %}
             <div class="c_noCandidatos">
                 <h2>No disponible</h2>
                 <p>Aun no hay canditos para elegir</p>
