@@ -1,16 +1,11 @@
-<link
-    rel="stylesheet"
-    href="{{ url_for('static', filename='css/header.css') }}"
-/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/icons/bootstrap-icons.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}" />
 <script src="{{ url_for('static', filename='js/header.js') }}" defer></script>
 
 <header id="header">
     <div class="c_logo">
         <a href="{{ url_for('administrador.inicio_administrador') }}">
-            <img
-                src="{{ url_for('static', filename='images/logo-SENA.png') }}"
-                alt="Logo del SENA"
-            />
+            <img src="{{ url_for('static', filename='images/logo-SENA.png') }}" alt="Logo del SENA" />
         </a>
     </div>
 
@@ -39,12 +34,50 @@
                         <a href="{{ url_for('usuario.perfil') }}">Perfil</a>
                     </li>
                     <li>
-                        <a href="{{ url_for('usuario.cerrarSesion') }}"
-                            >Cerrar sesión</a
-                        >
+                        <a href="{{ url_for('usuario.cerrarSesion') }}">Cerrar sesión</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 </header>
+
+
+
+
+<div class="o_crearCandidato">
+    <div class="c_addCandidato">
+        <header>
+            <i class="bi bi-x-lg"></i>
+            <h2>Nuevo candidato</h2>
+        </header>
+        <form action="">
+            <div class="aprendiz">
+                <div class="c_input">
+                    <input type="text" id="DocumentoAprendiz" placeholder="">
+                    <label for="DocumentoAprendiz">Documento aprendiz</label>
+                    <div class="loading">
+                        <img src="{{ url_for('static', filename='loading.gif') }}" alt="Loading">
+                    </div>
+                </div>
+                <div class="c_choose">
+                    <button>Elegir</button>
+                </div>
+            </div>
+            <div class="c_estado">
+                <p>El aprendiz Cristian es <span></span> para ser candidato.</p>
+            </div>
+            <div class="datos">
+                <span class="tag valida">Candidato</span>
+                <span class="tag invalida">Foto</span>
+                <span class="tag">Descripción</span>
+                <span class="tag valida">Activo</span>
+            </div>
+            <div class="c_button">
+                <button>Aceptar</button>
+                <button>Cancelar</button>
+            </div>
+
+        </form>
+    </div>
+</div>

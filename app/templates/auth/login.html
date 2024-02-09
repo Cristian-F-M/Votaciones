@@ -33,6 +33,7 @@
                         <select
                             name="tipoDocumentoUsuario"
                             id="TipoDocumentoUsuario"
+                            required
                         >
                             {% for tipoDocumento in TiposDocumento%}
                             <option value="{{ tipoDocumento.idTipoDocumento }}">

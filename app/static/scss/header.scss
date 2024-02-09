@@ -1,4 +1,6 @@
-main{
+$background-form-label: #fff;
+
+main {
     overflow: hidden;
 }
 
@@ -312,6 +314,183 @@ header {
                             transition: transform 0.3s;
                             bottom: 0;
                         }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.o_crearCandidato {
+    position: fixed;
+    inset: 0;
+    background-color: #0006;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    height: 100vh;
+    z-index: 30;
+
+    .c_addCandidato {
+        background-color: $background-form-label;
+        padding: 15px;
+        border-radius: 0.3rem;
+        position: relative;
+        width: 30%;
+
+        header {
+            position: static;
+            width: 100%;
+            height: fit-content;
+            background-color: transparent;
+
+            i {
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                font-size: 1.2rem;
+                cursor: pointer;
+                border-radius: 0.2rem;
+                padding: 3px;
+                display: flex;
+                align-items: center;
+
+                &:hover {
+                    outline: 2px solid #777;
+                }
+            }
+
+            h2 {
+                margin: 15px 0;
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        form {
+            .aprendiz {
+                display: flex;
+                width: 100%;
+                margin: 10px 0;
+
+                .c_input {
+                    position: relative;
+                    width: 85%;
+                    height: 40px;
+
+                    input {
+                        position: absolute;
+                        width: 100%;
+                        height: 100%;
+                        padding-left: 20px;
+                        background-color: transparent;
+                        border-style: solid;
+                        border-width: 1px;
+                        border-radius: 0.5rem;
+                        font-size: 15px;
+                        border-color: #666;
+
+                        &:required + label::after {
+                            content: "*";
+                            color: #f00;
+                            font-weight: 600;
+                        }
+
+                        &:focus {
+                            outline-color: #666;
+                            outline-style: solid;
+                        }
+                    }
+
+                    input[type="number"] {
+                        -moz-appearance: textfield;
+                        appearance: textfield;
+                    }
+
+                    input[type="number"]::-webkit-inner-spin-button,
+                    input[type="number"]::-webkit-outer-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                    }
+
+                    label {
+                        position: absolute;
+                        top: 50%;
+                        transform: translateY(-50%) translateX(15px);
+                        z-index: 20;
+                        padding: 1px 5px;
+                        transition: transform 0.35s, top 0.35s,
+                            background-color 0.4s;
+                        font-size: 18px;
+                        user-select: none;
+                        cursor: text;
+                        color: #333;
+                        letter-spacing: 1px;
+                    }
+
+                    input:focus + label,
+                    input:not(:placeholder-shown) + label {
+                        top: 0;
+                        transform: translateY(-50%) translateX(10px);
+                        background-color: $background-form-label;
+                        color: #000;
+                    }
+                }
+
+                .c_choose {
+                    margin-left: 10px;
+                    width: 15%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    button {
+                        width: 100%;
+                        height: 85%;
+                        background-color: #f7ec51;
+                        border: 2px solid #ece146;
+                        border-radius: 0.2rem;
+                        cursor: pointer;
+                        font-size: 14px;
+
+                        &:hover {
+                            background-color: #ece146;
+                        }
+                    }
+                }
+            }
+
+            .c_estado {
+                display: flex;
+                margin: 5px 0;
+
+                p {
+                    margin: 0;
+                }
+            }
+
+            .datos {
+                margin-top: 10px;
+                border-width: 1px 0 1px 0;
+                border-color: #0006;
+                border-style: solid;
+                height: 50px;
+                display: flex;
+                align-items: center;
+                justify-content: space-around;
+
+                span.tag {
+                    background-color: #bbb;
+                    padding: 7px 7px;
+                    border-radius: 0.2rem;
+
+                    &.valida {
+                        background-color: #3BB13B;
+                    }
+
+                    &.invalida {
+                        background-color: #f06060;
                     }
                 }
             }

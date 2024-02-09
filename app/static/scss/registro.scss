@@ -130,6 +130,12 @@ main {
                         font-weight: 600;
                     }
 
+                    &:not(:required) + label::after {
+                        content: "(opcional)";
+                        margin-left: 10px;
+                        color: #999;
+                    }
+
                     &:focus {
                         outline-color: #666;
                         outline-style: solid;

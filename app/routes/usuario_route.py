@@ -12,6 +12,8 @@ from flask import Blueprint, render_template
 from sqlalchemy.exc import IntegrityError
 import bcrypt, random, re, os
 from dotenv import load_dotenv
+# El código anterior importa el módulo `smtplib`, que es un módulo integrado en Python para enviar
+# correos electrónicos utilizando el Protocolo simple de transferencia de correo (SMTP).
 import smtplib
 from datetime import datetime
 from email.mime.text import MIMEText
@@ -58,12 +60,15 @@ def iniciar_sesion():
         idTipoDocumento=tipoDocumentoUsuario, documentoUsuario=documentoUsuario
     ).first()
 
+
     if not usuario:
         flash(
             ["error", "No encontramos tu usuario, intenta registrarte primero"],
             "session",
         )
         return redirect(url_for("general.login"))
+    
+    
 
     if not bcrypt.checkpw(
         hashed_password=usuario.contraseniaUsuario,

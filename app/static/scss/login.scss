@@ -82,6 +82,10 @@ main {
                         font-weight: 600;
                     }
 
+                    &:not(:required) + label::after {
+                        content: "(opcional)";
+                    }
+
                     &:focus {
                         outline-color: #666;
                         outline-style: solid;
