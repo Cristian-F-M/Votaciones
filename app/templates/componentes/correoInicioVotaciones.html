@@ -1,75 +1,78 @@
 <!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Inicio de Votaciones</title>
-        <link rel="stylesheet" href="styles.css" />
-    </head>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
 
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            text-align: center;
-        }
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inicio de Votaciones</title>
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
 
-        .message {
-            background-color: #f0f0f0;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    .container {
+        max-width: 800px;
+        margin: 50px auto;
+        text-align: center;
+    }
 
-        .message h1 {
-            font-size: 24px;
-            color: #333;
-        }
+    .message {
+        background-color: #f0f0f0;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
 
-        .message p {
-            font-size: 18px;
-            color: #666;
-        }
+    .message h1 {
+        font-size: 24px;
+        color: #333;
+    }
 
-        .login-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: #fff;
-            text-decoration: none;
-            border-radius: 5px;
-        }
+    .message p {
+        font-size: 18px;
+        color: #666;
+    }
 
-        .login-link:hover {
-            background-color: #0056b3;
-        }
+    .login-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+    }
 
-        .logos {
-            margin-top: 50px;
-        }
+    .login-link:hover {
+        background-color: #0056b3;
+    }
 
-        .logos img {
-            width: 150px;
-            margin: 0 20px;
-        }
-    </style>
-    <body>
-        <div class="container">
-            <div class="message">
-                <h1>¡Las votaciones han comenzado!</h1>
-                <p>Por favor, inicia sesión para participar.</p>
-                <a href="{{ url_for('general.login') }}" class="login-link">Ir a votar</a>
-            </div>
-            <div class="logos">
-                <img src="{{ url_for('static', filename='images/logo-SENA.jpg') }}" alt="Logo sena" />
-                <img src="{{ url_for('static', filename='images/logo-CM.png') }}" alt="Logo CM" />
-            </div>
+    .logos {
+        margin-top: 50px;
+    }
+
+    .logos img {
+        width: 150px;
+        margin: 0 20px;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="message">
+            <h1>¡Las votaciones han comenzado!</h1>
+            <p>Por favor, inicia sesión para participar.</p>
+            <a href="{{ url_for('general.login') }}" class="login-link">Ir a votar</a>
         </div>
-    </body>
+        <div class="logos">
+            <img src="{{ url_for('static', filename='images/logo-SENA.jpg') }}" alt="Logo sena" />
+            <img src="{{ url_for('static', filename='images/logo-CM.png') }}" alt="Logo CM" />
+        </div>
+    </div>
+</body>
+
 </html>
