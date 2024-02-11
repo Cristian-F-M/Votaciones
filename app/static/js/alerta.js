@@ -58,3 +58,30 @@ async function iniciarAnimaciones(mss) {
 function sleep(ms) {
     return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+function crearAlerta(msg, error = false) {
+    let main = document.querySelector('main')
+    if (main.querySelector(".c_mensajes")) {
+        main.removeChild(main.querySelector(".c_mensajes"));
+    }
+
+    let divMensajes = document.createElement("div");
+    let divMensaje = document.createElement("div");
+    let p = document.createElement("p");
+    let divCarga = document.createElement("div");
+
+    divMensajes.classList.add("c_mensajes");
+    divMensaje.classList.add("mensaje");
+    if (error) {
+        divMensaje.classList.add("text-error");
+    }
+    divCarga.classList.add("c_carga");
+    p.innerText = msg;
+
+    divMensaje.append(p);
+    divMensaje.append(divCarga);
+    divMensajes.append(divMensaje);
+    main.append(divMensajes);
+
+    iniciarAnimaciones();
+}

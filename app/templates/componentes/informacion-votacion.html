@@ -9,7 +9,7 @@
         <div class="c_votos-candidato">
             <div class="c_fechas-votos">
                 <form
-                    action="{{ url_for('votaciones.finalizarVotacion', idVotacion=votacion.idVotacion) }}"
+                    action="{{ url_for('votacion.finish_vote', votacion=votacion.idVotacion) }}"
                     method="POST"
                 >
                     <div class="c_fechas">
@@ -71,14 +71,14 @@
                         </div>
 
                         <div class="c_button">
-                            {% if votacion.estadoVotacion == 3 %}
+                            {% if votacion.idEstado == 1 %}
                             <button>Finalizar</button>
                             {% endif %}
 
                             <button
                                 type="button"
                                 data-id="{{ votacion.idVotacion }}"
-                                class="{{ 'w-100' if votacion.estadoVotacion != 3 else '' }}"
+                                class="{{ 'w-100' if votacion.idEstado != 1 else '' }}"
                                 id="EliminarVotacion"
                             >
                                 <i class="bi bi-trash"></i>
@@ -87,7 +87,7 @@
                     </div>
                 </form>
                 <form
-                    action="{{ url_for('votaciones.eliminarVotacion', idVotacion=votacion.idVotacion) }}"
+                    action="{{ url_for('votacion.delete_vote', votacion=votacion.idVotacion) }}"
                     method="POST"
                     data-id="{{ votacion.idVotacion }}"
                     id="FormularioEliminarVotacion"

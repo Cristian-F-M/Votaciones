@@ -1,14 +1,14 @@
 <nav>
     <ul>
         <li>
-            <a href="{{ url_for('general.inicio') }}" target="_blank"
+            <a href="{{ url_for('usuario.view_home') }}" target="_blank"
                 >Ver como aprendiz</a
             >
         </li>
         <li>
-            <a href="{{ url_for('administrador.votaciones') }}">Votaciones</a>
+            <a href="{{ url_for('administrador.view_votes') }}">Votaciones</a>
         </li>
-        <li><a href="">Candidatos</a></li>
+        <li><a id="Candidatos" href="#">Candidatos</a></li>
         <li><a href="">Usuarios</a></li>
         <li><a href="">Faltas y Sanciones</a></li>
     </ul>

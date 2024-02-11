@@ -67,19 +67,19 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for votacion in votaciones%}
+                                {% for votacion in votaciones %}
                                 <tr>
                                     <td>
                                         <input
-                                            type="datetime-local"
+                                            type="date"
                                             value="{{ votacion.fechaInicioVotacion }}"
                                             readonly
                                         />
                                     </td>
                                     <td>
                                         <input
-                                            type="datetime-local"
-                                            value="{{ votacion.fechaInicioVotacion }}"
+                                            type="date"
+                                            value="{{ votacion.fechaFinVotacion }}"
                                             readonly
                                         />
                                     </td>
@@ -95,7 +95,7 @@
                                                 id="ganador-{{ votacion.ganadorVotacion }}"
                                             />
                                             <label
-                                                estado="{{ votacion.estadoVotacionF.descripcionEstado }}"
+                                                estado="{{ votacion.estadoVotacion.descripcionEstado }}"
                                                 for="ganador-{{ votacion.ganadorVotacion }}"
                                             ></label>
                                         </div>

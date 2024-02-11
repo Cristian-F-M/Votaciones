@@ -30,7 +30,7 @@
                         <h1>Crear cuenta</h1>
                     </header>
                     <form
-                        action="{{ url_for('usuario.registrar') }}"
+                        action="{{ url_for('auth.register') }}"
                         method="post"
                         autocomplete="off"
                     >
@@ -62,7 +62,7 @@
                                 id="TipoDocumentoUsuario"
                                 required
                             >
-                                {% for tipoDocumento in TiposDocumento %}
+                                {% for tipoDocumento in tiposDocumento %}
                                 <option value="{{ tipoDocumento.idTipoDocumento }}">{{ tipoDocumento.descripcionTipoDocumento }}</option>
                                 {% endfor %}
                             </select>
@@ -132,12 +132,12 @@
                     </form>
                     <div class="c_acciones">
                         <span>Ya tienes una cuenta,</span>
-                        <a href="{{ url_for('general.login') }}"
+                        <a href="{{ url_for('auth.view_login') }}"
                             >Iniciar sesión?</a
                         >
                     </div>
                 </div>
-                <div class="c_form correo">
+                <!-- <div class="c_form correo">
                     <header>
                         <div id="backRegistro" class="back">
                             <i class="bi bi-arrow-left"></i>
@@ -172,7 +172,7 @@
                             <button id="VerificarButton">Verificar</button>
                         </div>
                     </form>
-                </div>
+                </div> -->
             </div>
             {% include 'componentes/alerta.html' %} 
         </main>

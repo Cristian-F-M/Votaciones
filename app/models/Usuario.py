@@ -2,7 +2,6 @@ from app import db
 from flask_login import UserMixin
 
 
-
 class Usuario(db.Model, UserMixin):
     __tablename__ = "usuarios"
 
@@ -22,12 +21,13 @@ class Usuario(db.Model, UserMixin):
     rolUsuario = db.relationship("Rol")
     descripcionUsuario = db.Column(db.String(255))
     fotoUsuario = db.Column(db.String(60))
-    estadoUsuario = db.Column(
+    idEstado = db.Column(
         db.Integer, db.ForeignKey("estados.idEstado"), nullable=False, default=1
     )
-    voto = db.Column(db.Integer, db.ForeignKey("usuarios.idUsuario"))
+    estadoUsuario = db.relationship("Estado")
+    idVoto = db.Column(db.Integer, db.ForeignKey("usuarios.idUsuario"))
     votoUsuario = db.relationship("Usuario", remote_side=[idUsuario])
-    contraseniaUsuario = db.Column(db.String(256))
+    contraseniaUsuario = db.Column(db.VARBINARY(256))
     codigoUsuario = db.Column(db.String(10))
 
     def get_id(self):

@@ -7,7 +7,7 @@
         <div class="c_informacion">
             <p>Quieres iniciar una nueva votación?</p>
         </div>
-        <form action="{{ url_for('votaciones.crear') }}" method="post">
+        <form action="{{ url_for('votacion.add') }}" method="post">
             <div class="c_input fijo">
                 <input
                     type="date"
@@ -19,7 +19,7 @@
             </div>
             <div class="c_input fijo">
                 <input
-                    type="datetime-local"
+                    type="date"
                     name="fechaFinVotacion"
                     id="FechaFin"
                     required

@@ -8,7 +8,6 @@
 # from app.models.book import Book
 # from app.models.author import Author
 from app.models.Estado import Estado
-from app.models.Falta import Falta
 from app.models.Rol import Rol
 from app.models.Sancion import Sancion
 from app.models.TipoDocumento import TipoDocumento

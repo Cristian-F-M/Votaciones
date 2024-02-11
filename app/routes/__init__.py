@@ -10,7 +10,7 @@ bp = Blueprint('main', __name__)
 
 #Importar las rutas
 # from app.routes import book_routes, author_routes
-from app.routes import usuario_route
-from app.routes import general_route
-from app.routes import administrador_route
-from app.routes import votaciones_route
+from app.routes import usuario_routes
+from app.routes import auth_routes
+from app.routes import administrador_routes
+from app.routes import votacion_route

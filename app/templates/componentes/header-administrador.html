@@ -4,7 +4,7 @@
 
 <header id="header">
     <div class="c_logo">
-        <a href="{{ url_for('administrador.inicio_administrador') }}">
+        <a href="{{ url_for('administrador.view_home') }}">
             <img src="{{ url_for('static', filename='images/logo-SENA.png') }}" alt="Logo del SENA" />
         </a>
     </div>
@@ -21,7 +21,7 @@
         <div id="menu-lateral" class="menu-lateral">
             <div class="c_usuario">
                 <span>{{ current_user.rolUsuario.descripcionRol }}</span>
-                <h4>{{ session.get('usernameUsuario') }}</h4>
+                <h4>{{ current_user.nombreUsuario }}</h4>
             </div>
             <span class="separador"></span>
             <div class="c_menu-movil">
@@ -31,10 +31,10 @@
             <div class="c_acciones-usuario">
                 <ul>
                     <li>
-                        <a href="{{ url_for('usuario.perfil') }}">Perfil</a>
+                        <a href="{{ url_for('usuario.view_profile') }}">Perfil</a>
                     </li>
                     <li>
-                        <a href="{{ url_for('usuario.cerrarSesion') }}">Cerrar sesión</a>
+                        <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
                     </li>
                 </ul>
             </div>
@@ -48,36 +48,50 @@
 <div class="o_crearCandidato">
     <div class="c_addCandidato">
         <header>
-            <i class="bi bi-x-lg"></i>
+            <i id="BTNCerrar" class="bi bi-x-lg"></i>
             <h2>Nuevo candidato</h2>
         </header>
-        <form action="">
+        <form id="FormAgragarCandidato" action="#" method="POST" autocomplete="off">
             <div class="aprendiz">
                 <div class="c_input">
-                    <input type="text" id="DocumentoAprendiz" placeholder="">
+                    <input type="text" id="DocumentoAprendiz" list="Aprendices" placeholder="">
                     <label for="DocumentoAprendiz">Documento aprendiz</label>
-                    <div class="loading">
-                        <img src="{{ url_for('static', filename='loading.gif') }}" alt="Loading">
+                    <div class="c_loading">
+                        <img src="{{ url_for('static', filename='images/loading.gif') }}" alt="Loading">
                     </div>
                 </div>
                 <div class="c_choose">
-                    <button>Elegir</button>
+                    <button id="BuscarAprendiz" type="button">Elegir</button>
                 </div>
             </div>
-            <div class="c_estado">
-                <p>El aprendiz Cristian es <span></span> para ser candidato.</p>
+            <div id="InformacionAprendiz" class="informacionAprendiz">
+                <div class="c_estado">
+                    <p>El aprendiz <span id="NombreAprendiz"></span> es <span class="tag" id="Valido"></span> para ser
+                        candidato.
+                    </p>
+                </div>
+                <div class="datos">
+                    <div class="c_titulo">
+                        <h4>Requisitos</h4>
+                    </div>
+                    <div class="c_tgs">
+                        <span class="tag rol">Aprendiz</span>
+                        <span class="tag foto">Foto</span>
+                        <span class="tag descripcion">Descripción</span>
+                        <span class="tag estado"></span>
+                    </div>
+                </div>
+                <div class="c_button">
+                    <button id="BTNAceptar" class="aceptar" disabled>Aceptar</button>
+                    <button id="BTNCerrar" class="cancelar">Cancelar</button>
+                </div>
             </div>
-            <div class="datos">
-                <span class="tag valida">Candidato</span>
-                <span class="tag invalida">Foto</span>
-                <span class="tag">Descripción</span>
-                <span class="tag valida">Activo</span>
-            </div>
-            <div class="c_button">
-                <button>Aceptar</button>
-                <button>Cancelar</button>
-            </div>
-
         </form>
+        <datalist id="Aprendices">
+            {% for usuario in usuarios %}
+            <option value="{{ usuario.documentoUsuario }}"></option>
+            {% endfor %}
+        </datalist>
+
     </div>
 </div>

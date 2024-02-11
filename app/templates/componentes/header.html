@@ -3,7 +3,7 @@
 
 <header id="header">
     <div class="c_logo">
-        <a href="{{ url_for('general.inicio') }}">
+        <a href="{{ url_for('usuario.view_home') }}">
             <img
                 src="{{ url_for('static', filename='images/logo-SENA.png') }}"
                 alt="Logo del SENA"
@@ -23,7 +23,7 @@
         <div id="menu-lateral" class="menu-lateral">
             <div class="c_usuario">
                 <span>{{ current_user.rolUsuario.descripcionRol }}</span>
-                <h4>{{ session.get('usernameUsuario') }}</h4>
+                <h4>{{ current_user.nombreUsuario }}</h4>
             </div>
             <span class="separador"></span>
             <div class="c_menu-movil">
@@ -33,11 +33,11 @@
             <div class="c_acciones-usuario">
                 <ul>
                     <li>
-                        <a href="{{ url_for('usuario.perfil') }}">Perfil</a>
+                        <a href="{{ url_for('usuario.view_profile') }}">Perfil</a>
                         <!-- <span></span> -->
                     </li>
                     <li>
-                        <a href="{{ url_for('usuario.cerrarSesion') }}">Cerrar sesión</a>
+                        <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
                         <!-- <span></span> -->
                     </li>
                 </ul>
