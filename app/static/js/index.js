@@ -52,7 +52,7 @@ EnviarCorreo.addEventListener("click", () => {
 });
 
 function enviarSugerencia(data) {
-    fetch("/Enviar-sugerencias", {
+    fetch("/Send-suggestion", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -61,9 +61,16 @@ function enviarSugerencia(data) {
     })
         .then((response) => response.text())
         .then((texto) => {
-            console.log("Respuesta del servidor:", texto);
+            if (texto == 500) {
+                crearAlerta(
+                    "Ocurrio un error, porfavor intentalo más tarde",
+                    true
+                );
+            }
 
-            crearAlerta(texto);
+            if (texto == 200) {
+                crearAlerta("Se envío la solicitud");
+            }
         })
         .catch((error) => {
             console.error("Error en la petición:", error);
@@ -71,30 +78,30 @@ function enviarSugerencia(data) {
         });
 }
 
-function crearAlerta(mensaje, error = false) {
-    if (main.querySelector(".c_mensajes")) {
-        main.removeChild(main.querySelector(".c_mensajes"));
-    }
+// function crearAlerta(mensaje, error = false) {
+//     if (main.querySelector(".c_mensajes")) {
+//         main.removeChild(main.querySelector(".c_mensajes"));
+//     }
 
-    let divMensajes = document.createElement("div");
-    let divMensaje = document.createElement("div");
-    let p = document.createElement("p");
-    let divCarga = document.createElement("div");
+//     let divMensajes = document.createElement("div");
+//     let divMensaje = document.createElement("div");
+//     let p = document.createElement("p");
+//     let divCarga = document.createElement("div");
 
-    divMensajes.classList.add("c_mensajes");
-    divMensajes.setAttribute("id", "Mensajes");
-    divMensajes.id = "Mensajes";
-    divMensaje.classList.add("mensaje");
-    if (error) {
-        divMensaje.classList.add("text-error");
-    }
-    divCarga.classList.add("c_carga");
-    p.innerText = mensaje;
+//     divMensajes.classList.add("c_mensajes");
+//     divMensajes.setAttribute("id", "Mensajes");
+//     divMensajes.id = "Mensajes";
+//     divMensaje.classList.add("mensaje");
+//     if (error) {
+//         divMensaje.classList.add("text-error");
+//     }
+//     divCarga.classList.add("c_carga");
+//     p.innerText = mensaje;
 
-    divMensaje.append(p);
-    divMensaje.append(divCarga);
-    divMensajes.append(divMensaje);
-    main.append(divMensajes);
+//     divMensaje.append(p);
+//     divMensaje.append(divCarga);
+//     divMensajes.append(divMensaje);
+//     main.append(divMensajes);
 
-    iniciarAnimaciones(divMensajes);
-}
+//     iniciarAnimaciones(divMensajes);
+// }

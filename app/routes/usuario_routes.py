@@ -151,7 +151,7 @@ def search_apprentice():
         else False
     )
     fotoUsuarioV = True if usuario.fotoUsuario or usuario.fotoUsuario != "" else False
-    estadoUsuarioV = True if usuario.estadoUsuario == 1 else False
+    estadoUsuarioV = True if usuario.idEstado == 1 else False
 
     valido = True if descripcionUsuarioV and fotoUsuarioV and estadoUsuarioV else False
 
@@ -163,19 +163,35 @@ def search_apprentice():
         "fotoUsuario": fotoUsuarioV,
         "descripcionUsuario": descripcionUsuarioV,
         "estadoUsuarioV": estadoUsuarioV,
-        "estadoUsuario": usuario.estado.descripcionEstado,
+        "estadoUsuario": usuario.estadoUsuario.descripcionEstado,
     }
+    return {"rs": 304, "usuario": usuario}
 
-    return {"rs": "304", "usuario": usuario}
+
+@bp.route("/search/user", methods=["POST"])
+def search_user():
+
+    data = request.json
+    documentoUsuario = data["documentoUsuario"]
+
+    usuario = Usuario.query.filter_by(documentoUsuario=documentoUsuario).first()
+
+    if not usuario:
+        return {"rs": 404}
+
+    rs = {"rs": 200, "idUsuario": usuario.idUsuario}
+
+    return rs
 
 
 @bp.route("/add/Candidate/<int:usuario>", methods=["POST"])
 def add_candidate(usuario):
     usuario = Usuario.query.get_or_404(usuario)
+    usuario.idRol = 2
     db.session.commit()
 
     flash(["informacion", "El aprendiz ahora es candidato"], "session")
-    return redirect(url_for("administrador.inicio"))
+    return redirect(url_for("administrador.view_home"))
 
 
 @bp.route("/Send-suggestion", methods=["POST"])
@@ -194,13 +210,33 @@ def send_suggestion():
     {correo}
     {nombre}
     {fecha}"""
+    try:
+        send_mail(
+            asunto="Sugerencias",
+            destinatario="cfmorales.diaz20@gmail.com",
+            finalMensaje="tu sugerencia",
+            contenido=mensaje,
+        )
+    except Exception:
+        return "500"
 
-    return send_mail(
-        asunto="Sugerencias",
-        destinatario="cfmorales.diaz20@gmail.com",
-        finalMensaje="tu sugerencia",
-        contenido=mensaje,
-    )
+    return "200"
+
+
+@bp.route("/edit/user/<int:usuario>", methods=["POST"])
+def edit_user(usuario):
+    usuario = Usuario.query.get_or_404(usuario)
+
+    nombreUsuario = request.form["nombreUsuario"]
+    apellidoUsuario = request.form["apellidoUsuario"]
+    idTipoDocumento = request.form["tipoDocumentoUsuario"]
+    usuario.nombreUsuario = nombreUsuario
+    usuario.apellidoUsuario = apellidoUsuario
+    usuario.idTipoDocumento = idTipoDocumento
+    db.session.commit()
+
+    flash(["informacion", "Se edito el usuario"], "session")
+    return redirect(url_for("administrador.view_usuario"))
 
 
 # //////////////////////////////////////////////
@@ -250,7 +286,7 @@ def send_mail(asunto, destinatario, contenido, finalMensaje, tipoContenido="plai
         mensaje["To"] = ", ".join(destinatario)
     else:
         mensaje["To"] = destinatario
-        
+
     mensaje["Subject"] = asunto
     mensaje.attach(MIMEText(contenido, tipoContenido))
     try:
