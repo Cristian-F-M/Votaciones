@@ -61,6 +61,7 @@ def view_results():
     ultimaVotacion = Votacion.query.order_by(asc(Votacion.idVotacion)).first()
     if ultimaVotacion:
         anio = ultimaVotacion.fechaInicioVotacion.year
+    anio = ""
 
     grafico = get_graphic(votos, anio=anio)
 
