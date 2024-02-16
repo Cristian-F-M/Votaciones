@@ -43,7 +43,7 @@
                         </div>
                         <div class="c_foto-candidato">
                             <img
-                                src="{{ url_for('static', filename='images/' ~ (rpActual.ganador.fotoUsuario if rpActual.ganadorVotacion.fotoUsuario else 'Triste!.jpg')) }}"
+                                src="{{ url_for('static', filename='images/' ~ (rpActual.ganador.fotoUsuario if rpActual and rpActual.ganadorVotacion.fotoUsuario else 'Triste!.jpg')) }}"
                                 alt=""
                             />
                         </div>
@@ -54,7 +54,7 @@
                     <div class="table">
                         <table>
                             <thead>
-                                <tr>
+                                <tr id="TrHead">
                                     <th>Inicio</th>
                                     <th>Fin</th>
                                     <th>Ganador</th>
@@ -103,7 +103,7 @@
                                     <td>
                                         <button
                                             id="Ver"
-                                            data-id="{{ votacion.ganadorVotacion }}"
+                                            data-id="{{ votacion.idVotacion }}"
                                         >
                                             Ver
                                         </button>
