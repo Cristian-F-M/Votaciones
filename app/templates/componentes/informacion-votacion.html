@@ -1,4 +1,4 @@
-<div class="o_informacion-votacion" data-id="{{ votacion.ganadorVotacion }}">
+<div class="o_informacion-votacion" data-id="{{ votacion.idVotacion }}">
     <div class="informacion-votacion">
         <a href="" class="cerrar">
             <i class="bi bi-x"></i>
@@ -15,7 +15,7 @@
                     <div class="c_fechas">
                         <div class="c_input-fijo" data-name="fechaInicio">
                             <input
-                                type="datetime-local"
+                                type="date"
                                 value="{{ votacion.fechaInicioVotacion }}"
                                 name="fechaInicioVotacion"
                                 id="FechaInicioVotacion"
@@ -24,9 +24,9 @@
                         </div>
                         <div class="c_input-fijo" data-name="fechaFin">
                             <input
-                                type="datetime-local"
+                                type="date"
                                 value="{{ votacion.fechaFinVotacion }}"
-                                name="fechaInicioVotacion"
+                                name="fechaFinVotacion"
                                 id="FechaFinVotacion"
                             />
                             <label for="FechaFinVotacion">Final</label>

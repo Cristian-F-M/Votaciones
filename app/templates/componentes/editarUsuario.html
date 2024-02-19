@@ -1,0 +1,59 @@
+<div class="o_editarUsuario" data-id="{{ usuario.idUsuario }}">
+    <div class="c_editarUsuario">
+        <div class="c_cerrar">
+            <i class="bi bi-x-lg" data-name="cerrarEditarUsuario" data-id="{{ usuario.idUsuario }}"></i>
+        </div>
+        <div class="c_titulo">
+            <h3>Usuario {{ usuario.nombreUsuario }}</h3>
+        </div>
+        <hr>
+        <div class="c_form">
+            <form action="{{ url_for('usuario.edit_user', usuario=usuario.idUsuario) }}" method="POST">
+
+                <div class="c_input">
+                    <input id="NombreUsuario" type="text" value="{{ usuario.nombreUsuario }}" placeholder="" required>
+                    <label for="NombreUsuario">Nombre</label>
+                </div>
+                <div class="c_input">
+                    <input id="ApellidoUsuario" type="text" value="{{ usuario.apellidoUsuario }}" placeholder=""
+                        required>
+                    <label for="ApellidoUsuario">Apellido</label>
+                </div>
+                <div class="c_select input-fijo">
+                    <select name="tipoDocumentoUsuario">
+                        <option selected value="{{ usuario.idTipoDocumento }}">{{
+                            usuario.tipoDocumentoUsuario.descripcionTipoDocumento }}</option>
+                        {% for tipoDocumento in tiposDocumento %}
+                        {% if usuario.idTipoDocumento != tipoDocumento.idTipoDocumento %}
+                        <option value="{{ tipoDocumento.idTipoDocumento }}">{{ tipoDocumento.descripcionTipoDocumento }}
+                        </option>
+                        {% endif %}
+                        {% endfor %}
+                    </select>
+                    <label for="">Tipo de documento</label>
+                </div>
+                <div class="c_input">
+                    <input id="DocumentoUsuario" type="text" value="{{ usuario.documentoUsuario }}" placeholder=""
+                        required readonly>
+                    <label for="DocumentoUsuario">Documento</label>
+                </div>
+                <div class="c_button">
+                    <div class="c_buttons">
+                        <button class="b_guardar">Guardar</button>
+                        {% if usuario.idRol == 3 %}
+                        <button formaction="{{ url_for('administrador.remove_admin', usuario=usuario.idUsuario) }}"
+                            class="b_remover">Remover administrador</button>
+                        {% elif usuario.idRol != 3 %}
+                        <button formaction="{{ url_for('administrador.add_admin', usuario=usuario.idUsuario) }}"
+                            class="hacer-admin">Hacer administrador</button>
+                        {% endif %}
+                    </div>
+                    <div class="c_cancelar">
+                        <button id="BTNcancelarEditar" class="b_cancelar" type="reset" data-name="cerrarEditarUsuario"
+                            data-id="{{ usuario.idUsuario }}">cancelar</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

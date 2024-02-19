@@ -1,4 +1,3 @@
-from app import db
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, logout_user, login_user, current_user
 from flask import Blueprint, render_template
@@ -12,10 +11,11 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 import base64
 from email.mime.text import MIMEText
+from email.mime.image import MIMEImage
 from email.mime.multipart import MIMEMultipart
 from app.models.Usuario import Usuario
 from app.models.Votacion import Votacion
-from app.models.TipoDocumento import TipoDocumento
+from app import db
 
 bp = Blueprint("usuario", __name__)
 
@@ -58,10 +58,10 @@ def view_results():
         )
     )
 
+    anio = ""
     ultimaVotacion = Votacion.query.order_by(asc(Votacion.idVotacion)).first()
     if ultimaVotacion:
         anio = ultimaVotacion.fechaInicioVotacion.year
-    anio = ""
 
     grafico = get_graphic(votos, anio=anio)
 
@@ -239,7 +239,17 @@ def edit_user(usuario):
     flash(["informacion", "Se edito el usuario"], "session")
     return redirect(url_for("administrador.view_usuario"))
 
-
+@bp.route("/Restablecer/Contraseña/<int:usuario>", methods=["POST"])
+def reset_password(usuario):
+    usuario = Usuario.query.get_or_404(usuario)
+    contraseniaUsuario = request.form['contraseniaUsuario'].encode('utf-8')
+    usuario.contraseniaUsuario = bcrypt.hashpw(password=contraseniaUsuario, salt=bcrypt.gensalt())
+    usuario.codigoUsuario = None
+    
+    db.session.commit()
+    flash(['informacion', 'Tu contraseña se cambió. Ya puedes iniciar sesión'], 'session')
+    return redirect(url_for('auth.view_login'))
+    
 # //////////////////////////////////////////////
 # Funciones
 
@@ -290,6 +300,7 @@ def send_mail(asunto, destinatario, contenido, finalMensaje, tipoContenido="plai
 
     mensaje["Subject"] = asunto
     mensaje.attach(MIMEText(contenido, tipoContenido))
+    
     try:
         with smtplib.SMTP(smtp_host, smtp_port) as servidor_smtp:
             servidor_smtp.starttls()
@@ -320,6 +331,19 @@ def get_graphic(votos, anio):
     imagen_base64 = base64.b64encode(buffer.getvalue()).decode()
     buffer.close()
     return imagen_base64
+
+
+def getCodigo(tamanio):
+    mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    digitos = "1234567890"
+    opciones = [mayus, digitos]
+
+    codigo = ""
+    for _ in range(tamanio):
+        opcion = random.choice(opciones)
+        codigo += random.choice(opcion)
+
+    return codigo
 
 
 # //////////////////////////////////////////////

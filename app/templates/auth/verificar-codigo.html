@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/icons/bootstrap-icons.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/verificar-usuario.css') }}" />
+    <script src="{{ url_for('static', filename='js/verificar-usuario.js') }}" defer></script>
+    <title>Votaciones - Confirmar código</title>
+</head>
+
+<body>
+    <main>
+        <div class="c_form" style="max-width: 600px;">
+            <a href="{{ url_for('auth.view_verify_user') }}">
+                <i class="bi bi-arrow-left"></i>
+            </a>
+            <header>
+                <div class="c_icon-email">
+                    <i class="bi-envelope-arrow-up-fill"></i>
+                </div>
+                <h1>Verifica el código</h1>
+            </header>
+
+            <div class="c_informacion">
+                <p>
+                    Escirbe el <b>código</b> que te enviamos al correo {{ correoOculto }}, escribelo en el
+                    siguiente espacio.
+                </p>
+                <p>Si no te llega el correo revisa en <b>spam</b></p>
+            </div>
+
+
+            <form action="{{ url_for('auth.verificar_codigo', usuario=idUsuario) }}" method="post" autocomplete="off">
+                <div class="c_input">
+                    <input type="text" name="codigoUsuario" id="CodigoUsuario" placeholder="" required
+                        style="text-transform: uppercase;">
+                    <label for="CodigoUsuario">Código</label>
+                </div>
+                <div class="c_button">
+                    <button>Verificar</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    {% include 'componentes/alerta.html' %}
+</body>
+
+</html>

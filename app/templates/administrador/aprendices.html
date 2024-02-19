@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/usuarios.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <script src="{{ url_for('static', filename='js/aprendices.js') }}" defer></script>
+    <title>Votaciones - Aprendices</title>
+</head>
+
+<body>
+    <main>
+        {% include 'componentes/header-administrador.html' %}
+
+        <div class="c_titulo">
+            <h1>Gestion de Aprendices</h1>
+        </div>
+
+        <div class="c_buscar">
+            <button id="BTNBuscarUsuario">Buscar</button>
+        </div>
+
+        <div class="c_table-aprendices">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Aprellido</th>
+                        <th>Tipo de documento</th>
+                        <th>Documento</th>
+                        <th>Correo</th>
+                        <th>Telefono</th>
+                        <th>Rol</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for usuario in usuariosAll %}
+                    <tr data-id="{{ usuario.idUsuario }}">
+                        <td>{{ usuario.nombreUsuario }}</td>
+                        <td>{{ usuario.apellidoUsuario }}</td>
+                        <td>{{ usuario.tipoDocumentoUsuario.descripcionTipoDocumento }}</td>
+                        <td>{{ usuario.documentoUsuario }}</td>
+                        <td>{{ usuario.correoUsuario }}</td>
+                        <td>{{ usuario.telefonoUsuario if usuario.telefonoUsuario else 'N/A' }}</td>
+                        <td>{{ usuario.rolUsuario.descripcionRol }}</td>
+                    </tr>
+
+                    {% include 'componentes/editarAprendiz.html' %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="O_buscarUsuario" class="o_buscarUsuario">
+        <div class="c_buscarUsuario">
+            <div class="c_cerrar">
+                <i id="CerrarbuscarUsuario" class="bi bi-x-lg"></i>
+            </div>
+            <div class="c_titulo">
+                <h3>
+                    Buscar Usuario
+                </h3>
+            </div>
+
+            <div class="c_form">
+                <div class="c_input">
+                    <input id="DocumentoUsuarioBuscar" type="number" required placeholder="">
+                    <label for="DocumentoUsuarioBuscar">Documento</label>
+                </div>
+                <div class="c_button">
+                    <button id="BuscarUsuario">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    {% include 'componentes/alerta.html' %}
+</body>
+
+</html>

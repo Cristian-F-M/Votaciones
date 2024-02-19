@@ -1,0 +1,44 @@
+<div data-id="{{ sancion.idSancion }}" class="o_informacion-aprendiz-sancion">
+    <div class="c_informacion-aprendiz-sancion">
+
+        <div class="c_cerrar">
+            <i data-id="{{ sancion.idSancion }}" data-name="cerrar-informacion-aprendiz" class="bi bi-x-lg"></i>
+        </div>
+        <div class="c_titulo">
+            <h3>{{ sancion.usuario.nombreUsuario }}</h3>
+        </div>
+
+        <div class="main">
+            <div class="row">
+                <div class="h">Nombre:</div>
+                <div class="p">{{ sancion.usuario.nombreUsuario }} {{ sancion.usuario.apellidoUsuario }}</div>
+            </div>
+
+            <div class="row">
+                <div class="h">Tipo de documento:</div>
+                <div class="p">{{ sancion.usuario.tipoDocumentoUsuario.descripcionTipoDocumento }}</div>
+            </div>
+
+            <div class="row">
+                <div class="h">Documento:</div>
+                <div class="p">{{ sancion.usuario.documentoUsuario }}</div>
+            </div>
+
+            <div class="row">
+                <div class="h">Correo:</div>
+                <div class="p">{{ sancion.usuario.correoUsuario }}</div>
+            </div>
+
+            <div class="row">
+                <div class="h">Telefono:</div>
+                <div class="p">{{ sancion.usuario.telefonoUsuario if sancion.usuario.telefonoUsuario else 'Sin dato' }}
+                </div>
+            </div>
+
+
+            <div class="c_button">
+                <button data-id="{{ sancion.idSancion }}" data-name="cerrar-informacion-aprendiz">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

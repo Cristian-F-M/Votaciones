@@ -1,0 +1,47 @@
+<div class="c_form">
+    <div class="c_titulo">
+        <h3>Agregar roles</h3>
+    </div>
+    <form action="{{ url_for('rol.add_rol') }}" method="POST" autocomplete="off">
+        <div class="c_input">
+            <input type="text" id="DescripcionRol" name="descripcionRol" placeholder="" required>
+            <label for="DescripcionRol">Decripción</label>
+        </div>
+
+        <div class="c_button">
+            <button id="BTNAgregarrRol">
+                Registrar
+                <i class="bi bi-plus-square"></i>
+            </button>
+        </div>
+    </form>
+</div>
+<div class="c_table">
+    <table id="TablaRoles">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for rol in roles %}
+            <tr>
+                <td>{{ rol.idRol }}</td>
+                <td>{{ rol.descripcionRol }}</td>
+                <td>
+                    <a>
+                        <i class="bi bi-pencil-square"></i>
+                        {% include 'componentes/complementos/editar-rol.html' %}
+                    </a>
+                </td>
+                <td>
+                    <form action="{{ url_for('rol.delete_rol', rol=rol.idRol) }}" method="POST">
+                        <button><i class="bi bi-trash3"></i></button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

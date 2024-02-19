@@ -6,13 +6,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='images/favicon.ico') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index-administrador.css') }}">
     <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-    <script src="{{ url_for('static', filename='js/index-administrador.js') }}"></script>
     <title>Votaciones - Administrar</title>
 </head>
 <body>
     <main>
         {% include 'componentes/header-administrador.html' %}
-        {% include 'componentes/alerta.html' %}
+        <h1>Bienvenido/a {{ current_user.nombreUsuario }}</h1>
     </main>
+    {% include 'componentes/alerta.html' %}
 </body>
 </html

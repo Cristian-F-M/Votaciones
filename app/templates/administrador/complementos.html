@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/complementos.css') }}">
+    <link rel="stylesheet" href="../../static/css/icons/bootstrap-icons.min.css">
+    <script src="{{ url_for('static', filename='js/complementos.js') }}" defer></script>
+    <title>Votaciones - Complementos</title>
+</head>
+
+<body>
+
+    <main>
+        {% include 'componentes/header-administrador.html' %}
+
+        <div class="contenido">
+            <div class="c_menu-contenedores">
+                {% set rs = True if (request.args.get('tag') != "rol") and (request.args.get('tag') != 'estado') and
+                request.args.get('tag') != 'tipoDocumento' else False %}
+                <ul>
+                    <li data-name="roles" {{ "active" if request.args.get('tag')=='rol' or not request.args.get('tag')
+                        or rs else '' }}>Roles</li>
+                    <li data-name="estados" {{ "active" if request.args.get('tag')=='estado' else '' }}>Estados</li>
+                    <li data-name="tiposDocumento" {{ "active" if request.args.get('tag')=='tipoDocumento' else '' }}>
+                        Tipos de documento</li>
+                </ul>
+            </div>
+            <div class="contenedores">
+                <div class="contenedor roles" data-name="roles" {{ "show" if request.args.get('tag')=='rol' or not request.args.get('tag')
+                or rs else '' }}>
+                    {% include 'componentes/complementos/roles.html' %}
+                </div>
+                <div class="contenedor estados" data-name="estados" {{ "show" if request.args.get('tag')=='estado'
+                    else '' }}>
+                    {% include 'componentes/complementos/estados.html' %}
+                </div>
+                <div class="contenedor tipos-documento" data-name="tiposDocumento" {{ "show" if
+                    request.args.get('tag')=='tipoDocumento' else '' }}>
+                    {% include 'componentes/complementos/tiposDocumento.html' %}
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </main>
+
+    {% include 'componentes/alerta.html' %}
+</body>
+
+</html>

@@ -19,6 +19,11 @@ const tag_estado = document.querySelector(".tag.estado");
 const nombreAprendiz = document.getElementById("NombreAprendiz");
 const valido = document.getElementById("Valido");
 const divInformacionAprendiz = document.getElementById("InformacionAprendiz");
+const dropDown = document.getElementById("DropDown");
+const mores = document.querySelectorAll("#More");
+const c_dropDown = dropDown?.parentNode;
+
+const c_dropDowns = document.querySelectorAll(".c_dropDown");
 
 btnMenu.addEventListener("click", () => {
     if (!btnMenu.hasAttribute("active")) {
@@ -32,6 +37,12 @@ btnMenu.addEventListener("click", () => {
     } else {
         menu_lateral.setAttribute("visible", "");
     }
+
+    c_dropDowns.forEach((c_dropDown) => {
+        if (c_dropDown.hasAttribute("show")) {
+            c_dropDown.removeAttribute("show");
+        }
+    });
 });
 
 colorHeader();
@@ -40,12 +51,14 @@ window.addEventListener("scroll", colorHeader);
 
 links.forEach((link) => {
     link.addEventListener("click", () => {
-        if (btnMenu.hasAttribute("active")) {
-            btnMenu.removeAttribute("active");
-        }
+        if (window.innerWidth >= 900) {
+            if (btnMenu.hasAttribute("active")) {
+                btnMenu.removeAttribute("active");
+            }
 
-        if (menu_lateral.hasAttribute("visible")) {
-            menu_lateral.removeAttribute("visible");
+            if (menu_lateral.hasAttribute("visible")) {
+                menu_lateral.removeAttribute("visible");
+            }
         }
     });
 });
@@ -54,15 +67,13 @@ var scrollSize = scrollSize;
 
 function colorHeader() {
     if (window.scrollY > scrollSize) {
-        header.style.backgroundColor =
-            "#262"; /* Vuelve a azul si estás arriba de los 100 píxeles */
+        header.style.backgroundColor = "#262";
     } else {
-        header.style.backgroundColor =
-            "#0608"; /* Cambia a rojo después de desplazar 100 píxeles */
+        header.style.backgroundColor = "#0608";
     }
 }
 
-candidatos.addEventListener("click", (evt) => {
+candidatos?.addEventListener("click", (evt) => {
     evt.preventDefault();
     o_crearCandidato.setAttribute("show", true);
     c_addCandidato.setAttribute("show", true);
@@ -90,7 +101,7 @@ function resetAgregarCandidato() {
 
 let buscando = false; // Variable para rastrear si se está realizando una búsqueda
 
-buscarAprendiz.addEventListener("click", async () => {
+buscarAprendiz?.addEventListener("click", async () => {
     c_loading.setAttribute("show", "");
     buscarAprendiz.style.cursor = "wait";
     divInformacionAprendiz.removeAttribute("show");
@@ -108,8 +119,10 @@ buscarAprendiz.addEventListener("click", async () => {
 
         var rs = await informacionAprendiz(data);
     } catch (error) {
-        // console.error("Error en la petición:", error);
-        // crearAlerta("Ocurrió un error al procesar la solicitud", true);
+        crearAlerta(
+            "Ocurrió un error al procesar la solicitud, intentalo más tarde.",
+            true
+        );
     } finally {
         setTimeout(() => {
             buscando = false;
@@ -128,7 +141,7 @@ buscarAprendiz.addEventListener("click", async () => {
 });
 
 async function informacionAprendiz(data) {
-    let response = await fetch("/Buscar-aprendiz", {
+    let response = await fetch("/Search/Apprentice", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -141,7 +154,7 @@ async function informacionAprendiz(data) {
 
 function llenarDatosAprendiz(usuario) {
     documentoAprendiz.value = "";
-    formAgragarCandidato.action = `/Agregar-candidato/${usuario.idUsuario}`;
+    formAgragarCandidato.action = `/add/Candidate/${usuario.idUsuario}`;
     nombreAprendiz.innerText = usuario.nombreUsuario;
     valido.classList.add(usuario.usuarioValido ? "valida" : "invalida");
     valido.innerText = usuario.usuarioValido ? "valido" : "invalido";
@@ -154,10 +167,24 @@ function llenarDatosAprendiz(usuario) {
 
     tag_estado.innerText = usuario.estadoUsuario;
     tag_estado.classList.add(usuario.estadoUsuarioV ? "valida" : "invalida");
-    
+
     if (usuario.usuarioValido) {
         btnAceptar.disabled = false;
     }
 
     divInformacionAprendiz.setAttribute("show", "");
 }
+
+mores.forEach((more) => {
+    more.addEventListener("click", (evt) => {
+        evt.preventDefault();
+
+        let c_dropDown = more.parentNode.querySelector(".c_dropDown");
+
+        if (!c_dropDown.hasAttribute("show")) {
+            c_dropDown.setAttribute("show", "");
+        } else {
+            c_dropDown.removeAttribute("show");
+        }
+    });
+});

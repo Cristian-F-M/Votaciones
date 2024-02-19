@@ -60,7 +60,7 @@ function sleep(ms) {
 }
 
 function crearAlerta(msg, error = false) {
-    let main = document.querySelector('main')
+    let main = document.querySelector("main");
     if (main.querySelector(".c_mensajes")) {
         main.removeChild(main.querySelector(".c_mensajes"));
     }
@@ -83,5 +83,5 @@ function crearAlerta(msg, error = false) {
     divMensajes.append(divMensaje);
     main.append(divMensajes);
 
-    iniciarAnimaciones();
+    iniciarAnimaciones(divMensajes);
 }

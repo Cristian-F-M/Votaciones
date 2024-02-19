@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/sanciones.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+    <script src="{{ url_for('static', filename='js/sanciones.js') }}" defer></script>
+    <title>Votaciones - Usuarios</title>
+</head>
+
+<body>
+    <main>
+        {% include 'componentes/header-administrador.html' %}
+
+        <div class="c_titulo">
+            <h1>Gestion de Sanciones</h1>
+        </div>
+
+        <div class="c_buscar">
+            <button id="BTNBuscarUsuario">Buscar</button>
+        </div>
+
+        <div class="c_table-aprendices">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Fecha</th>
+                        <th>Motivo</th>
+                        <th>Descripcion</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sancion in sanciones %}
+                    <tr data-id="{{ sancion.idSancion }}">
+                        <td data-id="{{ sancion.idSancion }}">{{ sancion.usuario.nombreUsuario }}</td>
+                        <td>{{ sancion.fechaSancion }}</td>
+                        <td>{{ sancion.motivoSancion }}</td>
+                        <td>{{ sancion.detalleSancion }}</td>
+                    </tr>
+
+                    {% include 'componentes/informacionAprendizSancion.html' %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% include 'componentes/alerta.html' %}
+    </main>
+
+    <div id="O_buscarUsuario" class="o_buscarUsuario">
+        <div class="c_buscarUsuario">
+            <div class="c_cerrar">
+                <i id="CerrarbuscarUsuario" class="bi bi-x-lg"></i>
+            </div>
+            <div class="c_titulo">
+                <h3>
+                    Buscar Usuario
+                </h3>
+            </div>
+
+            <div class="c_form">
+                <div class="c_input">
+                    <input name="documentoUsuario" id="DocumentoUsuarioBuscar" type="number" required placeholder=""
+                        autocomplete="off">
+                    <label for="DocumentoUsuarioBuscar">Documento</label>
+                </div>
+                <div class="c_button">
+                    <button id="BuscarUsuario">Buscar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

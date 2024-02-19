@@ -5,6 +5,7 @@ from sqlalchemy import not_, asc
 from app.models.Votacion import Votacion
 from app.models.Usuario import Usuario
 from app.models.Estado import Estado
+from app.models.Sancion import Sancion
 from sqlalchemy import func
 from datetime import datetime
 import pytz, os
@@ -23,11 +24,11 @@ bp = Blueprint("votacion", __name__)
 @admin_required
 def add():
     if request.method == "POST":
-        # correos = (
-        #     Usuario.query.filter(Usuario.correoUsuario.isnot(None))
-        #     .with_entities(Usuario.correoUsuario)
-        #     .all()
-        # )
+        correos = (
+            Usuario.query.filter(Usuario.correoUsuario.isnot(None))
+            .with_entities(Usuario.correoUsuario)
+            .all()
+        )
 
         fechaInicio = datetime.now(pytz.utc)
         fechaFin = request.form["fechaFinVotacion"]
@@ -53,13 +54,21 @@ def add():
             tipoContenido="html",
         )
 
-        flash(["informacion", "Votacion Iniciada"], "session")
+        msg = ""
+        if rs["rs"] == 200:
+            msg = ", se ha enviado la información a los aprendices."
+
+        flash(["informacion", "Votacion Iniciada" + msg], "session")
         return redirect(url_for("administrador.view_votes"))
 
 
 @bp.route("/Votes/Finish/<int:votacion>", methods=["POST"])
 @admin_required
 def finish_vote(votacion):
+
+    añadir_sancion()
+    candidato_a_aprendiz()
+
     rs = (
         db.session.query(Usuario.idVoto, func.count())
         .filter(Usuario.idVoto.isnot(None))
@@ -69,6 +78,7 @@ def finish_vote(votacion):
     )
 
     votacion = Votacion.query.get_or_404(votacion)
+
     totalVotos = (
         db.session.query(func.count(Usuario.idVoto))
         .filter(Usuario.idVoto.isnot(None))
@@ -110,3 +120,27 @@ def delete_vote(votacion):
     )
 
     return redirect(url_for("administrador.view_votes"))
+
+
+# ////////////////////////////////////
+
+
+def añadir_sancion():
+    usuariosSinVoto = Usuario.query.filter_by(idVoto=None)
+
+    for usuario in usuariosSinVoto:
+        new_sancion = Sancion(
+            idUsuario=usuario.idUsuario,
+            motivoSancion="No participar en las votaciones de representantes",
+        )
+        db.session.add(new_sancion)
+
+
+def candidato_a_aprendiz():
+    candidatos = Usuario.query.filter_by(idRol=2).all()
+
+    for candidato in candidatos:
+        candidato.idRol = 1
+
+
+# ////////////////////////////////////

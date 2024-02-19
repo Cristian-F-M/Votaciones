@@ -1,14 +1,33 @@
 <nav>
     <ul>
-        <li><a href="{{ url_for('usuario.view_home') }}">Inicio</a></li>
+        <li class="{{ 'active' if url_for('usuario.view_home') == request.path else '' }}">
+            <a
+                href="{{ url_for('usuario.view_home') }}">Inicio
+            </a>
+            <span></span>
+        </li>
         {% if current_user.voto == null and votacion.estadoVotacion == 3%}
-        <li><a href="{{ url_for('usuario.view_vote') }}">Votar</a></li>
+        <li class="{{ 'active' if url_for('usuario.view_vote') == request.path else '' }}">
+            <a 
+                href="{{ url_for('usuario.view_vote') }}">Votar
+            </a>
+            <span></span>
+        </li>
         {% else %}
-        <li>
-            <a href="{{ url_for('usuario.view_results') }}">Resultados votación</a>
+        <li class="{{ 'active' if url_for('usuario.view_results') == request.path else '' }}">
+            <a
+                href="{{ url_for('usuario.view_results') }}">Resultados votación</a>
+                <span></span>
+
         </li>
         {% endif %}
-        <li><a href="{{ url_for('usuario.view_home') }}#Contacto">Contacto</a></li>
-        <li><a href="{{ url_for('usuario.view_home') }}#Nosotros">Nostros</a></li>
+        <li>
+            <a href="{{ url_for('usuario.view_home') }}#Contacto">Contacto</a>
+            <span></span>
+        </li>
+        <li>
+            <a href="{{ url_for('usuario.view_home') }}#Nosotros">Nostros</a>
+            <span></span>
+        </li>
     </ul>
 </nav>

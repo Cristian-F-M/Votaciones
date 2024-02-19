@@ -1,0 +1,51 @@
+<div class="c_form">
+    <div class="c_titulo">
+        <h3>Agregar tipos de documento</h3>
+    </div>
+    <form action="{{ url_for('tipoDocumento.add_tipoDocumento') }}" method="POST" autocomplete="off">
+        <div class="c_input">
+            <input type="text" id="DescripcionTipoDocumento" name="descripcionTipoDocumento" placeholder="" required>
+            <label for="DescripcionTipoDocumento">Decripción</label>
+        </div>
+
+        <div class="c_button">
+            <button id="BTNAgregarEstado">
+                Agregar
+                <i class="bi bi-plus-square"></i>
+            </button>
+        </div>
+    </form>
+</div>
+<div class="c_table">
+    <table id="TablaEstados">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for tipoDocumento in tiposDocumento %}
+            <tr>
+                <td>{{ tipoDocumento.idTipoDocumento }}</td>
+                <td>{{ tipoDocumento.descripcionTipoDocumento }}</td>
+                <td>
+                    <a>
+                        <i class="bi bi-pencil-square"></i>
+                        {% include 'componentes/complementos/edit-tipoDocumento.html' %}
+                    </a>
+                </td>
+                <td>
+                    <form
+                        action="{{ url_for('tipoDocumento.delete_tipoDocumento', tipoDocumento=tipoDocumento.idTipoDocumento) }}"
+                        method="POST">
+                        <button>
+                            <i class="bi bi-trash3"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>

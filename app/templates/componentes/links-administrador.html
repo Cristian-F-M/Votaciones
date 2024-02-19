@@ -1,15 +1,49 @@
 <nav>
     <ul>
         <li>
-            <a href="{{ url_for('usuario.view_home') }}" target="_blank"
-                >Ver como aprendiz</a
-            >
+            <a href="{{ url_for('usuario.view_home') }}" target="_blank">Ver como aprendiz</a>
+            <span></span>
         </li>
         <li>
-            <a href="{{ url_for('administrador.view_votes') }}">Votaciones</a>
+            <a class="{{ 'active' if url_for('administrador.view_votes') == request.path else '' }}"
+                href="{{ url_for('administrador.view_votes') }}">Votaciones</a>
+            <span></span>
         </li>
-        <li><a id="Candidatos" href="#">Candidatos</a></li>
-        <li><a href="">Usuarios</a></li>
-        <li><a href="">Faltas y Sanciones</a></li>
+        <li>
+            <a id="Candidatos" href="#">Candidatos</a>
+            <span></span>
+        </li>
+        <li>
+            <a class="{{ 'active' if url_for('administrador.view_aprendices') == request.path else '' }}"
+                href="{{ url_for('administrador.view_aprendices') }}">Aprendices</a>
+            <span></span>
+        </li>
+        <li>
+            <a href="{{ url_for('sancion.view_sanciones') }}">Sanciones</a>
+            <span></span>
+        </li>
+        {% if current_user.idRol == 4 %}
+        <li class="li-more">
+
+            {% set is_in_max = True if url_for('administrador.view_votes') == request.path else False %}
+
+            <a id="More" href="#">Más</a>
+            <span></span>
+            <div class="c_dropDown">
+                <div id="DropDown" class="dropDown">
+                    <ul>
+                        <li>
+                            <a href="{{ url_for('administrador.view_usuarios') }}">Usuarios</a>
+                            <span></span>
+                        </li>
+                        <li>
+                            <a href="{{ url_for('administrador.view_complementos') }}">Complementos</a>
+                            <span></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+        {% endif %}
     </ul>
 </nav>

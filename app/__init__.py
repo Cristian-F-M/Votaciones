@@ -16,7 +16,7 @@ def create_app():
     db.init_app(app)
     login_manager.init_app(app)
 
-    login_manager.login_view = "auth.view_login"
+    login_manager.login_view = "auth.login"
 
     @login_manager.user_loader
     def load_user(idUsuario):
@@ -29,11 +29,19 @@ def create_app():
         usuario_routes,
         auth_routes,
         administrador_routes,
-        votacion_route,
+        votacion_routes,
+        rol_routes,
+        estado_routes,
+        sancion_routes,
+        tipoDocumento_routes
     )
 
     app.register_blueprint(usuario_routes.bp)
     app.register_blueprint(auth_routes.bp)
     app.register_blueprint(administrador_routes.bp)
-    app.register_blueprint(votacion_route.bp)
+    app.register_blueprint(votacion_routes.bp)
+    app.register_blueprint(sancion_routes.bp)
+    app.register_blueprint(rol_routes.bp)
+    app.register_blueprint(estado_routes.bp)
+    app.register_blueprint(tipoDocumento_routes.bp)
     return app

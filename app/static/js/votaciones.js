@@ -6,6 +6,8 @@ const cerrarNuevaVotacion = document.getElementById("CerrarNuevaVotacion");
 const nuevaVotacion = document.getElementById("NuevaVotacion");
 const fechaInicio = document.getElementById("FechaInicio");
 const eliminarVotacion = document.querySelectorAll("#EliminarVotacion");
+const trHead = document.getElementById("TrHead");
+const table = document.querySelector(".table");
 
 scrollSize = 0;
 
@@ -88,3 +90,23 @@ eliminarVotacion.forEach((btn) => {
         form.submit();
     });
 });
+
+table.addEventListener("scroll", colorHeader);
+
+var scrollSizeTbody = 10;
+
+function colorHeader() {
+    let ths = trHead.querySelectorAll("th");
+    let lastTh = trHead.querySelector("th:last-child");
+    let colorFondo = table.scrollTop > scrollSizeTbody ? "#7aad7a" : "#2729";
+
+    ths.forEach((th) => {
+        th.style.backgroundColor = colorFondo;
+    });
+
+    if (table.scrollTop < scrollSizeTbody) {
+        lastTh.style.backgroundColor = "transparent";
+    } else {
+        lastTh.style.backgroundColor = colorFondo;
+    }
+}

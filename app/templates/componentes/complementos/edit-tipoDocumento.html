@@ -1,0 +1,30 @@
+<div class="overlay-editar">
+    <div class="c_editar">
+
+        <div class="c_cerrar">
+            <div>
+                <i data-name="cerrar" class="bi bi-x-lg"></i>
+            </div>
+        </div>
+        <div class="c_titulo">
+            <h3>Editar tipo de documento</h3>
+        </div>
+        <form action="{{ url_for('tipoDocumento.edit_tipoDocumento', tipoDocumento=tipoDocumento.idTipoDocumento) }}" method="POST" autocomplete="off">
+            <div class="c_input">
+                <input type="text" id="DescripcionTipoDocumento" name="descripcionTipoDocumento" value="{{ tipoDocumento.descripcionTipoDocumento }}"
+                    placeholder="" required>
+                <label for="DescripcionTipoDocumento">Decripción</label>
+            </div>
+
+            <div class="c_button">
+                <button>
+                    Actualizar
+                    <i class="bi bi-pencil-square-fill"></i>
+                </button>
+
+                <button data-name="cerrar" type="button">Cancelar</button>
+            </div>
+        </form>
+
+    </div>
+</div>

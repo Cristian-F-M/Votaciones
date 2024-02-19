@@ -6,6 +6,7 @@ from sqlalchemy.exc import IntegrityError
 import bcrypt, random
 from app.models.Usuario import Usuario
 from app.models.TipoDocumento import TipoDocumento
+from app.routes.usuario_routes import send_mail
 
 bp = Blueprint("auth", __name__)
 
@@ -27,10 +28,9 @@ def view_verify_user():
     return render_template("auth/verificar-usuario.html")
 
 
-@bp.route("/Forgot-Password", methods=["GET"])
-def view_forgot_password():
-    tiposDocumento = TipoDocumento.query.all()
-    return render_template("auth.register", tiposDocumento=tiposDocumento)
+@bp.route("/Verificar-codigo/<int:u>/<string:c>", methods=["GET"])
+def view_verificar_codigo(u, c):
+    return render_template("auth/verificar-codigo.html", idUsuario=u, correoOculto=c)
 
 
 @bp.route("/registrar", methods=["GET", "POST"])
@@ -145,6 +145,56 @@ def logout():
     return redirect(url_for("auth.login"))
 
 
+@bp.route("/send/code", methods=["POST"])
+def send_code():
+    correoUsuario = request.form["correoUsuario"]
+
+    usuario = Usuario.query.filter_by(correoUsuario=correoUsuario).first()
+
+    if not usuario:
+        flash(["error", "No encontramos tu correo, revisalo."], "session")
+        return redirect(url_for("auth.view_verify_user"))
+
+    codigo = gen_codigo(8)
+    usuario.codigoUsuario = codigo
+
+    db.session.commit()
+    correoCodigo = render_template("componentes/correoCodigo.html", codigo=codigo)
+    rs = send_mail(
+        asunto="Código de verificación de usuario",
+        contenido=correoCodigo,
+        destinatario=correoUsuario,
+        tipoContenido="html",
+        finalMensaje="el código a tu correo",
+    )
+
+    if rs["rs"] == 500:
+        flash(["error", f"{rs.msj}"], "session")
+        return redirect(url_for("auth.view_verify_user"))
+
+    return redirect(url_for('auth.view_verificar_codigo', u=usuario.idUsuario, c=get_correo_oculto(usuario.correoUsuario)))
+    return render_template(
+        "auth/verificar-codigo.html",
+        usuario=usuario,
+        correoOculto=get_correo_oculto(usuario.correoUsuario),
+    )
+
+
+@bp.route("/Verificar/Codigo/<int:usuario>", methods=["POST"])
+def verificar_codigo(usuario):
+    usuario = Usuario.query.get_or_404(usuario)
+    codigoUsuario = request.form["codigoUsuario"]
+
+    if not codigoUsuario == usuario.codigoUsuario:
+        flash(
+            ["error", "El código no coincide, verificalo y vuelve a intentarlo"],
+            "session",
+        )
+        return render_template("auth/verificar-codigo.html", idUsuario=usuario.idUsuario)
+
+    return render_template("auth/reset-password.html", usuario=usuario)
+
+
 # //////////////////////////////////////////////
 # Funciones
 
@@ -153,7 +203,7 @@ def columnaDuplicada(exOrigin):
     return str(exOrigin).split("key")[-1].split(".")[-1].split("'")[0]
 
 
-def getCodigo(tamanio):
+def gen_codigo(tamanio):
     mayus = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     digitos = "1234567890"
     opciones = [mayus, digitos]
@@ -164,6 +214,22 @@ def getCodigo(tamanio):
         codigo += random.choice(opcion)
 
     return codigo
+
+
+def get_correo_oculto(correo):
+    correoOculto = ""
+    correoDividido = correo.split("@")
+    tamanio = len(correoDividido[0])
+
+    for i, letra in enumerate(correoDividido[0]):
+        if i > int(tamanio / 2):
+            caracter = "*" if (tamanio - i) >= 2 else letra
+            correoOculto += caracter
+
+    correoOculto += "@"
+    correoOculto += correoDividido[1]
+
+    return correoOculto
 
 
 # //////////////////////////////////////////////

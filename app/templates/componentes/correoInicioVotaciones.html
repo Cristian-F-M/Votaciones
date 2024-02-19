@@ -12,13 +12,16 @@
             style="background-color: #f0f0f0; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
             <h1 style="font-size: 24px; color: #333;">¡Las votaciones han comenzado!</h1>
             <p style="font-size: 18px; color: #666;">Por favor, inicia sesión para participar.</p>
-            <a target="_blank" href="{{ url_for('auth.view_login') }}"
-                style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px; :hover{background-color: #0056b3;}">Ir
+            <a target="_blank" href="https://votaciones.onrender.com/"
+                style="display: inline-block; margin-top: 20px; padding: 10px 20px; background-color: #007bff; color: #fff; text-decoration: none; border-radius: 5px;"
+                onmouseover="this.style.backgroundColor='#0056b3'" onmouseout="this.style.backgroundColor='#007bff'">Ir
                 a votar</a>
         </div>
         <div style="margin-top: 50px;">
-            <img style="width: 150px; margin: 0 20px;" src="{{ url_for('static', filename='images/logo-SENA.jpg') }}" alt="Logo sena" />
-            <img style="width: 150px; margin: 0 20px;" src="{{ url_for('static', filename='images/logo-CM.png') }}" alt="Logo CM" />
+            <img style="width: 150px; margin: 0 20px;" src="https://votaciones.onrender.com/static/images/logo-SENA.jpg"
+                alt="Logo sena" />
+            <img style="width: 150px; margin: 0 20px;" src="https://votaciones.onrender.com/static/images/logo-CM.png"
+                alt="Logo CM" />
         </div>
     </div>
 </body>

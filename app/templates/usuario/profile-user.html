@@ -13,7 +13,7 @@
 
 <body>
     <main>
-        {% if current_user.idRol == 35 or current_user.idRol == 36 %} {%
+        {% if current_user.idRol == 3 or current_user.idRol == 4 %} {%
         include 'componentes/header-administrador.html' %} {% else %} {%
         include 'componentes/header.html' %} {% endif %}
 
@@ -24,7 +24,13 @@
                     <div class="titulo">
                         <h2>
                             Datos Basicos
-                            <i class="bi bi-pencil-square" title="Editar Perfil" id="EditarPerfil"></i>
+                            <div class="c_editar">
+                                <i class="bi bi-pencil-square" title="Editar Perfil" id="EditarPerfil"></i>
+                                <div class="msg_editar-perfil">
+                                    <div class="arrow-left"></div>
+                                    <div class="contenido">Editar Perfil</div>
+                                </div>
+                            </div>
                         </h2>
                     </div>
                     <div class="fields">

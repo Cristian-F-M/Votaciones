@@ -1,73 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            rel="stylesheet"
-            href="{{ url_for('static', filename='css/resultados-votacion.css') }}"
-        />
-        <script src="{{ url_for('static', filename='js/resultados-votacion.js') }}"></script>
-        <link
-            rel="icon"
-            href="{{ url_for('static', filename='images/favicon.ico') }}"
-        />
-        <title>Votaciones - Resultados</title>
-    </head>
-    <body>
-        <main class="{{ 'mensaje' if votacion.estadoVotacion != 5 else '' }}">
-            {% include 'componentes/header.html' %} {% if
-            votacion.estadoVotacion == 5 %}
 
-            <div class="c_ganador">
-                <div class="c_foto">
-                    <img
-                        src="{{ url_for('static', filename='images/' ~ (votacion.ganador.fotoUsuario if votacion.ganadorVotacion.fotoUsuario else 'Triste!.jpg')) }}"
-                        alt="{{ votacion.ganador.nombreUsuario }}"
-                    />
-                </div>
-                <div class="c_datos">
-                    <div class="candidato">
-                        <h3>
-                            {{ votacion.ganador.nombreUsuario }} {{
-                            votacion.ganador.apellidoUsuario }}
-                        </h3>
-                        <div class="separador horizontal"></div>
-                        <p>{{ votacion.ganador.correoUsuario }}</p>
-                        <p>{{ votacion.ganador.descripcionUsuario if votacion.ganador.descripcionUsuario != 'None' else 'Sin descripción' }}</p>
-                    </div>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/resultados-votacion.css') }}" />
+    <script src="{{ url_for('static', filename='js/resultados-votacion.js') }}"></script>
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" />
+    <title>Votaciones - Resultados</title>
+</head>
 
+<body>
+    <main class="{{ 'mensaje' if votacion.estadoVotacion != 5 else '' }}">
+        {% include 'componentes/header.html' %} {% if
+        votacion.estadoVotacion == 5 %}
+
+        <div class="c_ganador">
+            <div class="c_foto">
+                <img src="{{ url_for('static', filename='images/' ~ (votacion.ganador.fotoUsuario if votacion.ganadorVotacion.fotoUsuario else 'Triste!.jpg')) }}"
+                    alt="{{ votacion.ganador.nombreUsuario }}" />
+            </div>
+            <div class="c_datos">
+                <div class="candidato">
+                    <h3>
+                        {{ votacion.ganador.nombreUsuario }} {{
+                        votacion.ganador.apellidoUsuario }}
+                    </h3>
                     <div class="separador horizontal"></div>
+                    <p>{{ votacion.ganador.correoUsuario }}</p>
+                    <p>{{ votacion.ganador.descripcionUsuario if votacion.ganador.descripcionUsuario != 'None' else 'Sin
+                        descripción' }}</p>
+                </div>
 
-                    <div class="votacion">
-                        <h5>
-                            Votos obtenidos:
-                            <b>{{ votacion.totalVotosVotacion }}</b>
-                        </h5>
-                        <h5>
-                            Porcentaje obtenido:
-                            <b>{{ votacion.porcentajeVotosVotacion }}%</b>
-                        </h5>
-                    </div>
+                <div class="separador horizontal"></div>
+
+                <div class="votacion">
+                    <h5>
+                        Votos obtenidos:
+                        <b>{{ votacion.totalVotosVotacion }}</b>
+                    </h5>
+                    <h5>
+                        Porcentaje obtenido:
+                        <b>{{ votacion.porcentajeVotosVotacion }}%</b>
+                    </h5>
                 </div>
             </div>
-            <div class="c_grafico">
-                <img
-                    src="data:image/png;base64,{{ graficoVotos }}"
-                    alt="Gráfico de Votos"
-                />
-            </div>
+        </div>
+        <div class="c_grafico">
+            <img src="data:image/png;base64,{{ graficoVotos }}" alt="Gráfico de Votos" />
+        </div>
 
-            {% else %}
+        {% else %}
 
-            <div class="c_mensaje">
-                <h3>Aun no ha finalizado la votacion</h3>
-                <p>
-                    Te avisaremos al finalizar para que revises los resultados
-                </p>
-            </div>
+        <div class="c_mensaje">
+            <h3>Aun no ha finalizado la votacion</h3>
+            <p>
+                Te avisaremos al finalizar para que revises los resultados
+            </p>
+        </div>
 
-            {% endif %}
-        </main>
-    </body>
+        {% endif %}
+    </main>
+</body>
+
 </html>
