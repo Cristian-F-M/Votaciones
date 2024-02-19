@@ -98,8 +98,8 @@
                 <div class="card-candidato">
                     <div class="c_nombre-candidato">
                         <h3>
-                            {{ rpActual.ganador.nombreUsuario if
-                            rpActual.ganadorVotacion else 'No hay elegido' }}
+                            {{ rpActual.ganadorVotacion.nombreUsuario if
+                            rpActual.idGanador else 'No hay elegido' }}
                         </h3>
                     </div>
                     <div class="c_foto-candidato">

@@ -106,8 +106,10 @@ def finish_vote(votacion):
     if rs:
         usuario, votos = rs
 
+        print(rs)
+
         porcentaje = (votos / totalVotos) * 100
-        votacion.ganadorVotacion = usuario
+        votacion.idGanador = usuario
         votacion.cantVotosVotacion = votos
         votacion.totalVotosVotacion = totalVotos
         votacion.porcentajeVotosVotacion = porcentaje

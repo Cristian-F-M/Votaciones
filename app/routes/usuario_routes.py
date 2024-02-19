@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, logout_user, login_user, current_user
 from flask import Blueprint, render_template
 from sqlalchemy.orm import aliased
-from sqlalchemy import not_, asc
+from sqlalchemy import not_, asc, desc
 import random, os, bcrypt
 import smtplib
 from dotenv import load_dotenv
@@ -23,24 +23,24 @@ bp = Blueprint("usuario", __name__)
 @bp.route("/Profile", methods=["GET"])
 @login_required
 def view_profile():
-    ultimaVotacion = Votacion.query.order_by(asc(Votacion.idVotacion)).first()
+    ultimaVotacion = Votacion.query.order_by(desc(Votacion.idVotacion)).first()
     return render_template("usuario/profile-user.html", votacion=ultimaVotacion)
 
 
 @bp.route("/Home")
 @login_required
 def view_home():
-    ultimaVotacion = Votacion.query.order_by(asc(Votacion.idVotacion)).first()
+    ultimaVotacion = Votacion.query.order_by(desc(Votacion.idVotacion)).first()
     return render_template("usuario/index.html", votacion=ultimaVotacion)
 
 
 @bp.route("/Vote")
 @login_required
 def view_vote():
-    ultimaVotacion = Votacion.query.first()
-    candidatos = Usuario.query.filter_by(idRol=34).all()
+    ultimaVotacion = Votacion.query.order_by(desc(Votacion.idVotacion)).first()  
+    candidatos = Usuario.query.filter_by(idRol=2).all()
     return render_template(
-        "usuario/votar.html", candidatos=candidatos, votacion=ultimaVotacion
+        "usuario/vote.html", candidatos=candidatos, votacion=ultimaVotacion
     )
 
 
@@ -59,7 +59,7 @@ def view_results():
     )
 
     anio = ""
-    ultimaVotacion = Votacion.query.order_by(asc(Votacion.idVotacion)).first()
+    ultimaVotacion = Votacion.query.order_by(desc(Votacion.idVotacion)).first()
     if ultimaVotacion:
         anio = ultimaVotacion.fechaInicioVotacion.year
 
@@ -320,18 +320,23 @@ def send_mail(asunto, destinatario, contenido, finalMensaje, tipoContenido="plai
 
 
 def get_graphic(votos, anio):
+    from run import app
     nombres = list(votos.keys())
     valores = list(votos.values())
 
-    plt.figure(figsize=(8, 6), facecolor="none")
+    plt.figure(figsize=(7, 5), facecolor="none")
+    plt.title(f"Resultados de las votaciones para el año {anio}")
     plt.pie(valores, labels=nombres, autopct="%1.1f%%", colors=plt.cm.tab20.colors)
-    buffer = BytesIO()
-    plt.savefig(buffer, format="png")
-    buffer.seek(0)
-    imagen_base64 = base64.b64encode(buffer.getvalue()).decode()
-    plt.savefig('static/images/resultados', format="png")
-    buffer.close()
-    # return imagen_base64
+    
+    ruta = os.path.join(app.root_path, 'static', 'images', 'resultados.png')
+    print(ruta)
+    
+    directorio_imagenes = 'static/images'
+    if not os.path.exists(directorio_imagenes):
+        os.makedirs(directorio_imagenes)
+    
+    plt.savefig(ruta, format="png")
+    plt.close()
 
 
 def getCodigo(tamanio):
