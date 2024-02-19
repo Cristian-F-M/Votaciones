@@ -15,6 +15,8 @@ from email.mime.multipart import MIMEMultipart
 import smtplib
 from app import db
 from app.routes.usuario_routes import send_mail
+from app.routes.usuario_routes import get_graphic
+from sqlalchemy.orm import aliased
 
 
 bp = Blueprint("votacion", __name__)
@@ -67,6 +69,20 @@ def add():
 def finish_vote(votacion):
 
     añadir_sancion()
+
+    usuario_alias = aliased(Usuario)
+    votos = dict(
+        (
+            db.session.query(usuario_alias.nombreUsuario, db.func.count(Usuario.idVoto))
+            .join(usuario_alias, Usuario.idVoto == usuario_alias.idUsuario)
+            .filter(Usuario.idVoto.isnot(None))
+            .group_by(usuario_alias.nombreUsuario)
+            .all()
+        )
+    )
+
+    grafico = get_graphic(anio=2024, votos=votos)
+    
     candidato_a_aprendiz()
 
     rs = (

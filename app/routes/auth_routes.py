@@ -66,6 +66,20 @@ def register():
                     contraseniaUsuario.encode("utf-8"), bcrypt.gensalt()
                 ),
             )
+            
+            if len(contraseniaUsuario) < 8:
+                flash(usuario, "usuarioOld")
+                error = [
+                    "contraseniaUsuario",
+                    "La contraseña debe tener mínimo 8 caracteres",
+                ]
+                flash(error, "session")
+                return redirect(url_for("auth.view_register"))
+
+            if contraseniaUsuario != contraseniaUsuario_confirm:
+                flash(usuario, "usuarioOld")
+                return redirect(url_for("auth.view_register"))
+                
             db.session.add(new_usuario)
             db.session.commit()
         except IntegrityError as ex:
@@ -80,18 +94,7 @@ def register():
             flash(error, "session")
             return redirect(url_for("auth.view_register"))
 
-        if len(contraseniaUsuario) < 8:
-            flash(usuario, "usuarioOld")
-            error = [
-                "contraseniaUsuario",
-                "La contraseña debe tener mínimo 8 caracteres",
-            ]
-            flash(error, "session")
-            return redirect(url_for("auth.view_register"))
-
-        if contraseniaUsuario != contraseniaUsuario_confirm:
-            flash(usuario, "usuarioOld")
-            return redirect(url_for("auth.view_register"))
+        
 
         flash(["informacion", "Cuenta creada con exito"], "session")
         return redirect(url_for("auth.view_login"))

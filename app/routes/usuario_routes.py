@@ -23,15 +23,15 @@ bp = Blueprint("usuario", __name__)
 @bp.route("/Profile", methods=["GET"])
 @login_required
 def view_profile():
-    votacion = Votacion.query.first()
-    return render_template("usuario/profile-user.html", votacion=votacion)
+    ultimaVotacion = Votacion.query.order_by(asc(Votacion.idVotacion)).first()
+    return render_template("usuario/profile-user.html", votacion=ultimaVotacion)
 
 
 @bp.route("/Home")
 @login_required
 def view_home():
-    votacion = Votacion.query.first()
-    return render_template("usuario/index.html", votacion=votacion)
+    ultimaVotacion = Votacion.query.order_by(asc(Votacion.idVotacion)).first()
+    return render_template("usuario/index.html", votacion=ultimaVotacion)
 
 
 @bp.route("/Vote")
@@ -63,10 +63,10 @@ def view_results():
     if ultimaVotacion:
         anio = ultimaVotacion.fechaInicioVotacion.year
 
-    grafico = get_graphic(votos, anio=anio)
+    # grafico = get_graphic(votos, anio=anio)
 
     return render_template(
-        "usuario/results-votes.html", graficoVotos=grafico, votacion=ultimaVotacion
+        "usuario/results-votes.html", votacion=ultimaVotacion
     )
 
 
@@ -329,8 +329,9 @@ def get_graphic(votos, anio):
     plt.savefig(buffer, format="png")
     buffer.seek(0)
     imagen_base64 = base64.b64encode(buffer.getvalue()).decode()
+    plt.savefig('static/images/resultados', format="png")
     buffer.close()
-    return imagen_base64
+    # return imagen_base64
 
 
 def getCodigo(tamanio):

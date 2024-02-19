@@ -6,10 +6,10 @@
             </a>
             <span></span>
         </li>
-        {% if current_user.voto == null and votacion.estadoVotacion == 3%}
+        {% if current_user.idVoto == None and votacion.idEstado == 1 %}
         <li class="{{ 'active' if url_for('usuario.view_vote') == request.path else '' }}">
             <a 
-                href="{{ url_for('usuario.view_vote') }}">Votar
+                href="{{ url_for('usuario.view_vote') }}">Votar  
             </a>
             <span></span>
         </li>
@@ -31,3 +31,4 @@
         </li>
     </ul>
 </nav>
+
