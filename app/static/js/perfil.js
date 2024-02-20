@@ -50,7 +50,7 @@ function deshabilitarInputs() {
 }
 
 function handleFileChange(evt) {
-    const file = evt.target.files[0];
+    let file = evt.target.files[0];
     if (file) {
         fotoUsuario.src = URL.createObjectURL(file);
         fotoUsuario.alt = file.name;
@@ -59,17 +59,19 @@ function handleFileChange(evt) {
 }
 
 function handleEditarClick() {
-    const editar = acciones.getAttribute("editar");
-    const actualizar = BTNActualizar.getAttribute("editar");
+    let editar = acciones.getAttribute("editar");
+    let actualizar = BTNActualizar.getAttribute("editar");
 
     if (editar === "false" && actualizar === "false") {
         setEditableAttribute([acciones, BTNActualizar], true);
         habilitarInputs();
+        crearAlerta("Se habilito el editar perfil")
     } else {
         setEditableAttribute([acciones, BTNActualizar], false);
         inputCambiarContrasenia.checked = false;
         showAcciones();
         deshabilitarInputs();
+        crearAlerta("Se deshabilito el editar perfil")
     }
 }
 

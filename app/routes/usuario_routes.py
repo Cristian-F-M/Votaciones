@@ -134,6 +134,7 @@ def edit_profile():
 
 @bp.route("/Search/Apprentice", methods=["POST"])
 def search_apprentice():
+    
     data = request.json
     documentoUsuario = data["documentoUsuario"]
 
@@ -274,11 +275,11 @@ def name_user_photo(usuario, filename):
 
 def delete_user_photo(idUsuario):
     from run import app
-
     fotoUsuario = Usuario.query.get_or_404(idUsuario).fotoUsuario
-    ruta_imagen = os.path.join(app.root_path, "static", "images", fotoUsuario)
-    if os.path.exists(ruta_imagen):
-        os.remove(ruta_imagen)
+    if fotoUsuario:
+        ruta_imagen = os.path.join(app.root_path, "static", "images", fotoUsuario)
+        if os.path.exists(ruta_imagen):
+            os.remove(ruta_imagen)
 
 
 def send_mail(asunto, destinatario, contenido, finalMensaje, tipoContenido="plain"):
