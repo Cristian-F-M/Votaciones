@@ -10,8 +10,8 @@ inputs.forEach(input => {
 
 buttonSubmit.addEventListener("click", () => {
     // let lenNames = Object.keys(inputNames).length
-    validarInputs();
-    validadContraseñas();
+    // validarInputs();
+    // validadContraseñas();
 });
 
 

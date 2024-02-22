@@ -127,6 +127,8 @@ buscarAprendiz?.addEventListener("click", async () => {
         setTimeout(() => {
             buscando = false;
             buscarAprendiz.disabled = false;
+
+            console.log(rs)
             if (rs.rs == 404) {
                 crearAlerta("No se encuentra el aprendiz", true);
             }

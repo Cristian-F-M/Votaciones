@@ -7,6 +7,7 @@ import bcrypt, random
 from app.models.Usuario import Usuario
 from app.models.TipoDocumento import TipoDocumento
 from app.routes.usuario_routes import send_mail
+from app.routes.votacion_routes import generar_sancion
 
 bp = Blueprint("auth", __name__)
 
@@ -66,7 +67,7 @@ def register():
                     contraseniaUsuario.encode("utf-8"), bcrypt.gensalt()
                 ),
             )
-            
+
             if len(contraseniaUsuario) < 8:
                 flash(usuario, "usuarioOld")
                 error = [
@@ -79,7 +80,7 @@ def register():
             if contraseniaUsuario != contraseniaUsuario_confirm:
                 flash(usuario, "usuarioOld")
                 return redirect(url_for("auth.view_register"))
-                
+
             db.session.add(new_usuario)
             db.session.commit()
         except IntegrityError as ex:
@@ -93,8 +94,6 @@ def register():
             error = [columna, error]
             flash(error, "session")
             return redirect(url_for("auth.view_register"))
-
-        
 
         flash(["informacion", "Cuenta creada con exito"], "session")
         return redirect(url_for("auth.view_login"))
@@ -175,7 +174,13 @@ def send_code():
         flash(["error", f"{rs.msj}"], "session")
         return redirect(url_for("auth.view_verify_user"))
 
-    return redirect(url_for('auth.view_verificar_codigo', u=usuario.idUsuario, c=get_correo_oculto(usuario.correoUsuario)))
+    return redirect(
+        url_for(
+            "auth.view_verificar_codigo",
+            u=usuario.idUsuario,
+            c=get_correo_oculto(usuario.correoUsuario),
+        )
+    )
     return render_template(
         "auth/verificar-codigo.html",
         usuario=usuario,
@@ -193,7 +198,9 @@ def verificar_codigo(usuario):
             ["error", "El código no coincide, verificalo y vuelve a intentarlo"],
             "session",
         )
-        return render_template("auth/verificar-codigo.html", idUsuario=usuario.idUsuario)
+        return render_template(
+            "auth/verificar-codigo.html", idUsuario=usuario.idUsuario
+        )
 
     return render_template("auth/reset-password.html", usuario=usuario)
 

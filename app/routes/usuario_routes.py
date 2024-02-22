@@ -149,10 +149,10 @@ def search_apprentice():
 
     descripcionUsuarioV = (
         True
-        if usuario.descripcionUsuario or usuario.descripcionUsuario != ""
+        if usuario.descripcionUsuario is not None and usuario.descripcionUsuario.strip() != ""
         else False
     )
-    fotoUsuarioV = True if usuario.fotoUsuario or usuario.fotoUsuario != "" else False
+    fotoUsuarioV = True if usuario.fotoUsuario and usuario.fotoUsuario != "" else False
     estadoUsuarioV = True if usuario.idEstado == 1 else False
 
     valido = True if descripcionUsuarioV and fotoUsuarioV and estadoUsuarioV else False
@@ -294,10 +294,7 @@ def send_mail(asunto, destinatario, contenido, finalMensaje, tipoContenido="plai
     mensaje = MIMEMultipart()
 
     mensaje["From"] = smtp_name
-    if isinstance(destinatario, list):
-        mensaje["To"] = ", ".join(destinatario)
-    else:
-        mensaje["To"] = destinatario
+    mensaje["To"] = destinatario
 
     mensaje["Subject"] = asunto
     mensaje.attach(MIMEText(contenido, tipoContenido))
@@ -306,8 +303,7 @@ def send_mail(asunto, destinatario, contenido, finalMensaje, tipoContenido="plai
         with smtplib.SMTP(smtp_host, smtp_port) as servidor_smtp:
             servidor_smtp.starttls()
             servidor_smtp.login(smtp_user, smtp_password)
-            servidor_smtp.sendmail(smtp_user, destinatario, mensaje.as_string())
-
+            servidor_smtp.sendmail(from_addr=smtp_user, to_addrs=destinatario, msg=mensaje.as_string())
             return {
                 "rs": 200,
                 "msj": f"Se ha enviado {finalMensaje}",
