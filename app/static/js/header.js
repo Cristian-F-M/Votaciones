@@ -2,7 +2,9 @@ const btnMenu = document.getElementById("btn_menu");
 const menu_lateral = document.getElementById("menu-lateral");
 const header = document.getElementById("header");
 const links = document.querySelectorAll("a");
-const candidatos = document.getElementById("Candidatos");
+const candidatos = document.querySelectorAll("#Candidatos");
+
+const candidato = document.getElementById("Candidatos");
 const c_addCandidato = document.querySelector(".c_addCandidato");
 const o_crearCandidato = document.querySelector(".o_crearCandidato");
 const btnsCerrar = document.querySelectorAll("#BTNCerrar");
@@ -73,10 +75,12 @@ function colorHeader() {
     }
 }
 
-candidatos?.addEventListener("click", (evt) => {
-    evt.preventDefault();
-    o_crearCandidato.setAttribute("show", true);
-    c_addCandidato.setAttribute("show", true);
+candidatos?.forEach((candidato) => {
+    candidato.addEventListener("click", (evt) => {
+        evt.preventDefault();
+        o_crearCandidato.setAttribute("show", true);
+        c_addCandidato.setAttribute("show", true);
+    });
 });
 
 btnsCerrar.forEach((btnCerrar) => {
@@ -128,7 +132,7 @@ buscarAprendiz?.addEventListener("click", async () => {
             buscando = false;
             buscarAprendiz.disabled = false;
 
-            console.log(rs)
+            console.log(rs);
             if (rs.rs == 404) {
                 crearAlerta("No se encuentra el aprendiz", true);
             }
