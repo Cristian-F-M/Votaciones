@@ -22,7 +22,7 @@ from sqlalchemy.orm import aliased
 bp = Blueprint("votacion", __name__)
 
 
-with open('config.json') as f:
+with open("config.json") as f:
     config = json.load(f)
 
 
@@ -51,16 +51,15 @@ def add():
         ultimaVotacion = Votacion.query.order_by(asc(Votacion.idVotacion)).first()
 
         contenido = render_template("componentes/correoInicioVotaciones.html")
-        print(correos)
-        return "str(correos)"
 
-        rs = send_mail(
-            asunto="Votaciones para representandes CGAO",
-            contenido=contenido,
-            destinatario=correos,
-            finalMensaje="la información a los aprendices",
-            tipoContenido="html",
-        )
+        if config["correosInicioVotacion"]:
+            rs = send_mail(
+                asunto="Votaciones para representandes CGAO",
+                contenido=contenido,
+                destinatario=correos,
+                finalMensaje="la información a los aprendices",
+                tipoContenido="html",
+            )
 
         msg = ""
         if rs["rs"] == 200:
@@ -74,8 +73,8 @@ def add():
 @admin_required
 def finish_vote(votacion):
 
-
-    añadir_sancion()
+    if config["correosSancionesVotacion"]:
+        añadir_sancion()
 
     usuario_alias = aliased(Usuario)
     votos = dict(
@@ -124,8 +123,8 @@ def finish_vote(votacion):
         .with_entities(Usuario.correoUsuario)
         .all()
     )
-
-    enviar_corre_finalizar(correos)
+    if config["correosFinVotacion"]:
+        enviar_corre_finalizar(correos)
 
     db.session.commit()
 
