@@ -8,7 +8,7 @@ from app.models.Estado import Estado
 from app.models.Sancion import Sancion
 from sqlalchemy import func
 from datetime import datetime
-import pytz, os, random
+import pytz, os, random, json
 from dotenv import load_dotenv
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -20,6 +20,10 @@ from sqlalchemy.orm import aliased
 
 
 bp = Blueprint("votacion", __name__)
+
+
+with open('config.json') as f:
+    config = json.load(f)
 
 
 @bp.route("/add/votes", methods=["POST"])
@@ -69,6 +73,7 @@ def add():
 @bp.route("/Votes/Finish/<int:votacion>", methods=["POST"])
 @admin_required
 def finish_vote(votacion):
+
 
     añadir_sancion()
 
