@@ -124,11 +124,11 @@ def remove_admin(usuario):
     return redirect(url_for("administrador.view_usuarios"))
 
 
-@bp.route("/Edit/Config/<string:url>", methods=["POST"])
+@bp.route("/Edit/Config/", methods=["POST"])
 @login_required
 @admin_required
 @owner_required
-def edit_config(url):
+def edit_config():
 
     correosInicioVotacion = request.form.get("correosInicioVotacion", "off")
     correosFinVotacion = request.form.get("correosFinVotacion", "off")
@@ -150,10 +150,10 @@ def edit_config(url):
 
     with open("config.json", "w") as f:
         json.dump(config, f, indent=4)
-    url = f"/{url}"
+    
 
     flash(["informacion", "La configuraciones se actualizaron correctamente"], "session")
-    return redirect(url)
+    return redirect(url_for('administrador.view_home'))
 
 
 def carga_config():
