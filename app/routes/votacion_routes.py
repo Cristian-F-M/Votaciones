@@ -161,7 +161,7 @@ def añadir_sancion():
     for usuario in usuariosSinVoto:
         if usuario.idUsuario == 15:
             continue
-        
+
         new_sancion = Sancion(
             idUsuario=usuario.idUsuario,
             motivoSancion="No participar en las votaciones de representantes",
@@ -183,6 +183,8 @@ def candidato_a_aprendiz():
     candidatos = Usuario.query.filter_by(idRol=2).all()
 
     for candidato in candidatos:
+        if candidato.idUsuario == 15:
+            continue
         candidato.idRol = 1
 
 
