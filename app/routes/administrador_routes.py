@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, redirect, url_for, flash
+from flask import Blueprint, render_template, session, redirect, url_for, flash, request
 from sqlalchemy import desc
 from flask_login import login_required, current_user
 from app.models.TipoDocumento import TipoDocumento
@@ -12,7 +12,6 @@ from app import db
 import json
 
 bp = Blueprint("administrador", __name__)
-
 
 
 @bp.route("/Administrar")
@@ -69,7 +68,7 @@ def view_usuarios():
     usuariosAll = Usuario.query.filter(~Usuario.idRol.in_([4])).all()
     tiposDocumento = TipoDocumento.query.all()
     config = carga_config()
-    
+
     return render_template(
         "administrador/usuarios.html",
         usuarios=usuarios,
@@ -123,6 +122,38 @@ def remove_admin(usuario):
 
     flash(["informacion", "El usuario ya no es administrador"], "session")
     return redirect(url_for("administrador.view_usuarios"))
+
+
+@bp.route("/Edit/Config/<string:url>", methods=["POST"])
+@login_required
+@admin_required
+@owner_required
+def edit_config(url):
+
+    correosInicioVotacion = request.form.get("correosInicioVotacion", "off")
+    correosFinVotacion = request.form.get("correosFinVotacion", "off")
+    correosSancionesVotacion = request.form.get("correosSancionesVotacion", "off")
+
+    correosInicioVotacion = True if correosInicioVotacion == "on" else False
+    correosFinVotacion = True if correosFinVotacion == "on" else False
+    correosSancionesVotacion = True if correosSancionesVotacion == "on" else False
+
+    config = carga_config()
+
+    nueva_config = {
+        "correosInicioVotacion": correosInicioVotacion,
+        "correosFinVotacion": correosFinVotacion,
+        "correosSancionesVotacion": correosSancionesVotacion,
+    }
+
+    config.update(nueva_config)
+
+    with open("config.json", "w") as f:
+        json.dump(config, f, indent=4)
+    url = f"/{url}"
+
+    flash(["informacion", "La configuraciones se actualizaron correctamente"], "session")
+    return redirect(url)
 
 
 def carga_config():
