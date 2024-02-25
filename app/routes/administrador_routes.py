@@ -9,17 +9,19 @@ from app.models.Rol import Rol
 from app.decorators.admin_required import admin_required
 from app.decorators.owner_required import owner_required
 from app import db
-
+import json
 
 bp = Blueprint("administrador", __name__)
+
 
 
 @bp.route("/Administrar")
 @login_required
 @admin_required
 def view_home():
+    config = carga_config()
     usuarios = Usuario.query.filter(~Usuario.idRol.in_([3, 4])).all()
-    return render_template("administrador/index.html", usuarios=usuarios)
+    return render_template("administrador/index.html", usuarios=usuarios, config=config)
 
 
 @bp.route("/Votaciones")
@@ -29,11 +31,14 @@ def view_votes():
     usuarios = Usuario.query.filter(~Usuario.idRol.in_([3, 4])).all()
     votaciones = Votacion.query.order_by(desc(Votacion.idVotacion)).all()
     rpActual = Votacion.query.order_by(desc(Votacion.idVotacion)).first()
+    config = carga_config()
+
     return render_template(
         "administrador/votes.html",
         votaciones=votaciones,
         rpActual=rpActual,
         usuarios=usuarios,
+        config=config,
     )
 
 
@@ -44,11 +49,14 @@ def view_aprendices():
     aprendices = Usuario.query.filter_by(idRol=1).all()
     usuariosAll = Usuario.query.filter(~Usuario.idRol.in_([3, 4])).all()
     tiposDocumento = TipoDocumento.query.all()
+    config = carga_config()
+
     return render_template(
         "administrador/aprendices.html",
         aprendices=aprendices,
         usuariosAll=usuariosAll,
         tiposDocumento=tiposDocumento,
+        config=config,
     )
 
 
@@ -60,11 +68,14 @@ def view_usuarios():
     usuarios = Usuario.query.filter(~Usuario.idRol.in_([3, 4])).all()
     usuariosAll = Usuario.query.filter(~Usuario.idRol.in_([4])).all()
     tiposDocumento = TipoDocumento.query.all()
+    config = carga_config()
+    
     return render_template(
         "administrador/usuarios.html",
         usuarios=usuarios,
         usuariosAll=usuariosAll,
         tiposDocumento=tiposDocumento,
+        config=config,
     )
 
 
@@ -77,6 +88,7 @@ def view_complementos():
     estados = Estado.query.all()
     tiposDocumento = TipoDocumento.query.all()
     roles = Rol.query.all()
+    config = carga_config()
 
     return render_template(
         "administrador/complementos.html",
@@ -84,6 +96,7 @@ def view_complementos():
         estados=estados,
         tiposDocumento=tiposDocumento,
         roles=roles,
+        config=config,
     )
 
 
@@ -110,3 +123,9 @@ def remove_admin(usuario):
 
     flash(["informacion", "El usuario ya no es administrador"], "session")
     return redirect(url_for("administrador.view_usuarios"))
+
+
+def carga_config():
+    with open("config.json") as f:
+        config = json.load(f)
+        return config

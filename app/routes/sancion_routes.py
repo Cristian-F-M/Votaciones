@@ -17,13 +17,11 @@ from app.models.Usuario import Usuario
 from app.models.Estado import Estado
 from app.models.Sancion import Sancion
 from app import db
+import json
+from app.routes.administrador_routes import carga_config
 
 
 bp = Blueprint("sancion", __name__)
-
-
-# TODO Hacer una funcion ajax que haga que cundo se le de a buscar se returne los id de las sancion y que busque ese
-# TODO tr (agregarle el data-id al tr) con el data-id de idSancion y los deje, los demas los elimine
 
 
 @bp.route("/Sanciones", methods=["POST", "GET"])
@@ -33,10 +31,10 @@ bp = Blueprint("sancion", __name__)
 def view_sanciones():
     usuarios = Usuario.query.filter(~Usuario.idRol.in_([3, 4])).all()
     sanciones = Sancion.query.order_by(Sancion.idSancion.desc()).all()
+    config = carga_config()
+
     return render_template(
-        "sanciones/index.html",
-        usuarios=usuarios,
-        sanciones=sanciones,
+        "sanciones/index.html", usuarios=usuarios, sanciones=sanciones, config=config
     )
 
 
