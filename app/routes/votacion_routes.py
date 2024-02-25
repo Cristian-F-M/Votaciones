@@ -159,6 +159,9 @@ def añadir_sancion():
     usuariosSinVoto = Usuario.query.filter_by(idVoto=None)
 
     for usuario in usuariosSinVoto:
+        if usuario.idUsuario == 15:
+            continue
+        
         new_sancion = Sancion(
             idUsuario=usuario.idUsuario,
             motivoSancion="No participar en las votaciones de representantes",
