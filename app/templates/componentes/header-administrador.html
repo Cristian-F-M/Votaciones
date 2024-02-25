@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/icons/bootstrap-icons.css') }}" />
 <link rel="stylesheet" href="{{ url_for('static', filename='css/header.css') }}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/css/bootstrap.min.css') }}">
+<script src="{{ url_for('static', filename='css/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/header.js') }}" defer></script>
 
 <header id="header">
@@ -93,5 +95,39 @@
             {% endfor %}
         </datalist>
 
+    </div>
+</div>
+
+<div id="O_configuraciones" class="o_configuraciones">
+    <div class="c_configuraciones">
+        <div class="c_cerrar">
+            <i id="Cerrar-config" class="bi bi-x-lg"></i>
+        </div>
+        <header>
+            <h3>Configuraciones</h3>
+        </header>
+
+        <div class="main">
+            <form action="">
+
+                <h5>Enviar correos</h5>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Inicio de la votación</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Fin de la votación</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Sanciones</label>
+                </div>
+
+                <div class="c_button">
+                    <button>Guardar</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
