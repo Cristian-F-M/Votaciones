@@ -21,6 +21,9 @@ const tag_estado = document.querySelector(".tag.estado");
 const nombreAprendiz = document.getElementById("NombreAprendiz");
 const valido = document.getElementById("Valido");
 const divInformacionAprendiz = document.getElementById("InformacionAprendiz");
+const btnConfiguraciones = document.querySelectorAll('#Configuraciones')
+const o_configuraciones = document.getElementById('O_configuraciones')
+const cerrarConfig = document.getElementById('Cerrar-config')
 const dropDown = document.getElementById("DropDown");
 const mores = document.querySelectorAll("#More");
 const c_dropDown = dropDown?.parentNode;
@@ -194,3 +197,28 @@ mores.forEach((more) => {
         }
     });
 });
+
+
+btnConfiguraciones.forEach(btn => {
+
+    btn.addEventListener('click', (evt) => {
+        evt.preventDefault()
+
+        if (btnMenu.hasAttribute("active")) {
+            btnMenu.removeAttribute("active", "");
+        }
+
+        if (menu_lateral.hasAttribute("visible")) {
+            menu_lateral.removeAttribute("visible");
+        }
+
+        c_dropDown.removeAttribute('show')
+        o_configuraciones.setAttribute('show', '')
+    })
+})
+
+
+cerrarConfig.addEventListener('click', () => {
+    o_configuraciones.removeAttribute('show')
+    reset.click()
+})

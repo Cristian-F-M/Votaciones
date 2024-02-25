@@ -8,7 +8,7 @@ from app.models.Estado import Estado
 from app.models.Sancion import Sancion
 from sqlalchemy import func
 from datetime import datetime
-import pytz, os, random
+import pytz, os, random, json
 from dotenv import load_dotenv
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -20,6 +20,10 @@ from sqlalchemy.orm import aliased
 
 
 bp = Blueprint("votacion", __name__)
+
+
+with open("config.json") as f:
+    config = json.load(f)
 
 
 @bp.route("/add/votes", methods=["POST"])
@@ -47,16 +51,15 @@ def add():
         ultimaVotacion = Votacion.query.order_by(asc(Votacion.idVotacion)).first()
 
         contenido = render_template("componentes/correoInicioVotaciones.html")
-        print(correos)
-        return "str(correos)"
 
-        rs = send_mail(
-            asunto="Votaciones para representandes CGAO",
-            contenido=contenido,
-            destinatario=correos,
-            finalMensaje="la información a los aprendices",
-            tipoContenido="html",
-        )
+        if config["correosInicioVotacion"]:
+            rs = send_mail(
+                asunto="Votaciones para representandes CGAO",
+                contenido=contenido,
+                destinatario=correos,
+                finalMensaje="la información a los aprendices",
+                tipoContenido="html",
+            )
 
         msg = ""
         if rs["rs"] == 200:
@@ -70,7 +73,8 @@ def add():
 @admin_required
 def finish_vote(votacion):
 
-    añadir_sancion()
+    if config["correosSancionesVotacion"]:
+        añadir_sancion()
 
     usuario_alias = aliased(Usuario)
     votos = dict(
@@ -119,8 +123,8 @@ def finish_vote(votacion):
         .with_entities(Usuario.correoUsuario)
         .all()
     )
-
-    enviar_corre_finalizar(correos)
+    if config["correosFinVotacion"]:
+        enviar_corre_finalizar(correos)
 
     db.session.commit()
 
@@ -155,6 +159,9 @@ def añadir_sancion():
     usuariosSinVoto = Usuario.query.filter_by(idVoto=None)
 
     for usuario in usuariosSinVoto:
+        if usuario.idUsuario == 15:
+            continue
+
         new_sancion = Sancion(
             idUsuario=usuario.idUsuario,
             motivoSancion="No participar en las votaciones de representantes",
@@ -176,6 +183,8 @@ def candidato_a_aprendiz():
     candidatos = Usuario.query.filter_by(idRol=2).all()
 
     for candidato in candidatos:
+        if candidato.idUsuario == 15:
+            continue
         candidato.idRol = 1
 
 
