@@ -1,5 +1,5 @@
 {
-    "correosInicioVotacion": true,
-    "correosFinVotacion": true,
-    "correosSancionesVotacion": true
+    "correosInicioVotacion": false,
+    "correosFinVotacion": false,
+    "correosSancionesVotacion": false
 }

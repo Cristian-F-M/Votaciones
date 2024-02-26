@@ -77,7 +77,7 @@ def vote():
     usuario.voto = candidato
     db.session.commit()
     flash(["informacion", "Voto registrado con exito"], "session")
-    return redirect(url_for("usuario.inicio"))
+    return redirect(url_for("usuario.view_home"))
 
 
 @bp.route("/edit-profile/", methods=["POST"])
